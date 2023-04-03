@@ -1,4 +1,4 @@
-window.onscroll = function() {myFunction()};
+/*window.onscroll = function() {myFunction()};
 
 // Get the navbar
 var navbar = document.getElementsByTagName("nav");
@@ -13,4 +13,16 @@ function myFunction() {
   } else {
     navbar.classList.remove("sticky");
   }
+}*/
+function init(){
+  const header = document.querySelector('header');
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 0) {
+      header.classList.add('scroll');
+    } else {
+      header.classList.remove('scroll');
+    }
+  });
 }
+window.addEventListener('DOMContentLoaded', init);

@@ -1,5 +1,8 @@
+body{
+    margin: 0;
+}
 head {
-    position: fixed;
+    position: absolute;
 }
 .Titel {
     color: #fff;
@@ -7,13 +10,28 @@ head {
     float: left;
     width: 75%;
 }
+.Titel.scroll{
+    display: none;
+}
 .Konto {
     color: #fff;
-    background-color: #333;
+    background-color: #a13e3e;
     float: right;
     width: 25%;
+    text-align: center;
 }
-a :visited {
+.Konto a{
+    font-size: 30px;
+    align-self: center;
+}
+.Konto img{
+    height: 25px;
+} 
+a {
+    color: #fff;
+    text-decoration: none;
+}
+a :visited{
     color: #fff;
     text-decoration: none;
 }
@@ -26,20 +44,11 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-nav ul {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    display: flex;
-}
-nav li {
-    text-align: center;
-    width: 25%;
-    list-style: none;
-    margin: 0 10px;
+    position: sticky;
 }
 nav a {
+    text-align: center;
+    width: 25%;
     color: #fff;
     text-decoration: none;
 }
@@ -56,13 +65,13 @@ nav a {
   }
   
   /* The sticky class is added to the navbar with JS when it reaches its scroll position */
-  .sticky {
+ /* .sticky {
     position: fixed;
     top: 0;
     width: 100%;
   }
   
   /* Add some top padding to the page content to prevent sudden quick movement (as the navigation bar gets a new position at the top of the page (position:fixed and top:0) */
-  .sticky + .content {
+ /* .sticky + .content {
     padding-top: 60px;
   }
