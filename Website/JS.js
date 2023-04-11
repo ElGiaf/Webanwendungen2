@@ -2,9 +2,11 @@ function init(){
   
   window.addEventListener('scroll', () => {
     if (window.scrollY > 0) {
-      document.getElementById('Logo').classList.add("minimized");
+      //document.getElementsByTagName('HEADER').classList.add("minimized");
+      document.getElementById('head').classList.add("minimized");
     } else {
-      document.getElementById('Logo').classList.remove("minimized");
+      //document.getElementsByTagName('HEADER').classList.remove("minimized");
+      document.getElementById('head').classList.remove("minimized");
     }
   });
 }
