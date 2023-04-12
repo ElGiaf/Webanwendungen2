@@ -16,6 +16,7 @@ header{
   z-index: 999;
     position: fixed;
     position: -webkit-sticky;
+    /*background-color: #00d9ff;*/
 }
 #Logo{
     padding:0 20%;
@@ -84,13 +85,22 @@ input{
     text-transform: uppercase;
     color: #fff;
 }
-input::selection{
-    background-color: #eee;
+@media(min-aspect-ratio: 1/1){
+
+    #head.minimized nav{
+        padding-top: 12px;
+        width: 74%;
+        float: left;
+    }
 }
-#head.minimized nav{
-    padding-top: 12px;
-    width: 71%;
-    float: left;
+
+@media(max-aspect-ratio: 1/0.9){
+    
+    #head.minimized nav{
+        padding-top: 12px;
+        width: 100%;
+        float: left;
+    }
 }
 #head.minimized nav ul{
     float: left;
@@ -104,6 +114,9 @@ input::selection{
     margin: 0;
 
 }
+/*#head.minimized nav li a{
+    font-size: 70%;
+}*/
 #head.minimized nav input{
     width: 18%;
     float: left;
@@ -120,6 +133,5 @@ main {
     padding: 20px;
     font-size: 1.2em;
     line-height: 1.5;
-    padding-top: 50% ;
-    padding: 16px
+    padding-top: 70% ;
 }
