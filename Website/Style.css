@@ -89,6 +89,10 @@ input{
     text-transform: uppercase;
     color: #fff;
 }
+
+table {
+    border:1;
+}
 main {
 
     margin: 50px; /* Platz für die Navigationsleiste */
