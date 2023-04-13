@@ -130,17 +130,31 @@ dd::after {
 #erinnerung{
     text-align: center;
     /*padding: 10px;
-    
     background-color: gray;*/
     font-size: 1em;
     position: fixed;
-    top:15em;
+    top:10em;
     right:5em;
 }
 
 .fest{
     float:left;
     margin-right: 25px;
+}
+
+.Zeitraum{
+    width: 50%;
+    border-collapse: collapse;
+}
+
+.Zeitraum th, td{
+    border: solid;
+}
+
+
+.bilderreihe{
+    margin-left: 10em;
+    padding-bottom: 1em;
 }
 
 main {
