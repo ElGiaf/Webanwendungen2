@@ -129,9 +129,10 @@ dd::after {
 
 #erinnerung{
     text-align: center;
-    padding: 10px;
-    font-size: 15px;
-    background-color: gray;
+    /*padding: 10px;
+    
+    background-color: gray;*/
+    font-size: 1em;
     position: fixed;
     top:15em;
     right:5em;
@@ -152,6 +153,16 @@ main {
     overflow-y: scroll;
     /*background-color: rgba(0, 0, 0, 0.432);*/
 }
+button{
+    font-family:Delicious_Handrawn;
+    font-size: 1.6em;
+    margin: .2em .2em .2em 0;
+    padding: .3em 1em;
+    border: #fff solid 3px;
+    border-radius: 1.5em;
+    background-color: #ffffff5f;
+    color: #fff;
+}
 .input{
     /*display: flex;
     justify-content: center;*/
@@ -161,14 +172,7 @@ main {
 }
 .input button{
     width: 100%;
-    font-family:Delicious_Handrawn;
-    font-size: 1.6em;
-    margin: .2em .2em .2em 0;
-    padding: .3em 1em;
-    border: #fff solid 3px;
-    border-radius: 1.5em;
-    background-color: #ffffff5f;
-    color: #fff;
+    
 }
 .input input{
     margin: .2em .2em .2em 0;
