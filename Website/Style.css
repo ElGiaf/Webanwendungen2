@@ -108,6 +108,16 @@ dt {
   margin-right: 0.5em;
  
 }
+
+
+dt img{
+    width: 400px;
+    height: 400px;
+}
+
+
+
+
 dd::after {
     clear: left;
     content: " ";
@@ -115,6 +125,20 @@ dd::after {
     margin-top:15px;
   }
 
+#erinnerung{
+    text-align: center;
+    padding: 10px;
+    font-size: 15px;
+    background-color: gray;
+    position: fixed;
+    top:15em;
+    right:5em;
+}
+
+.fest{
+    float:left;
+    margin-right: 25px;
+}
 
 main {
     position: relative;
