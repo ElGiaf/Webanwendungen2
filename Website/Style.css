@@ -6,6 +6,7 @@ html, body{
     width: 100%;
 }
 body{
+    min-width: 800px;
     padding: 0;
     margin: 0;
     overflow-x: hidden;
@@ -36,7 +37,7 @@ header{
     position: relative;
     z-index: 998;
 }
-header a:hover{
+a:hover{
     filter: brightness(.75);
 }
 a {
@@ -76,8 +77,8 @@ li a {
     text-decoration: none;
 }
 input{
-    margin: 5%;
-    padding: 2%;
+    margin: .5em;
+    padding: .5em;
     height: 1em;
     width: 100%;
     font-size: 1.5em;
@@ -86,7 +87,7 @@ input{
     border-radius: 1.5em;
     text-align: center;
     font-family:Delicious_Handrawn;
-    text-transform: uppercase;
+    /*text-transform: uppercase;*/
     color: #fff;
 }
 
@@ -99,5 +100,30 @@ main {
     padding: 20px;
     font-size: 1.2em;
     line-height: 1.5;
-    padding-top: 70% ;
+    margin-top: 9em ;
+    /*background-color: rgba(0, 0, 0, 0.432);*/
+}
+.input{
+    /*display: flex;
+    justify-content: center;*/
+    width: 20em;
+    margin: auto;
+    /*background-color: #ff00dd;*/
+}
+.input button{
+    width: 100%;
+    font-family:Delicious_Handrawn;
+    font-size: 1.6em;
+    margin: .2em .2em .2em 0;
+    padding: .3em 1em;
+    border: #fff solid 3px;
+    border-radius: 1.5em;
+    background-color: #ffffff3f;
+    color: #fff;
+}
+.input input{
+    margin: .2em .2em .2em 0;
+    width: 91%;
+    margin-left: 0;
+    background-color: #ffffff3f;
 }
