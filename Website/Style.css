@@ -90,6 +90,7 @@ input{
     font-family:Delicious_Handrawn;
     /*text-transform: uppercase;*/
     color: #fff;
+    background-color: #ffffff5f;
 }
 
 dl{
@@ -138,12 +139,35 @@ main {
     padding: .3em 1em;
     border: #fff solid 3px;
     border-radius: 1.5em;
-    background-color: #ffffff3f;
+    background-color: #ffffff5f;
     color: #fff;
 }
 .input input{
     margin: .2em .2em .2em 0;
     width: 91%;
-    margin-left: 0;
-    background-color: #ffffff3f;
+    margin-left: 0; 
+}
+button.tempButton{
+    background-color: #ff0000c7;
+} 
+table{
+    width: 100%;
+    font-family:Delicious_Handrawn ;
+    color: #fff;
+    text-align: center;
+    font-size: 1.6em;
+    background-color: #ffffff31;
+    
+}
+table img{
+    height: 2em;
+}
+p.warnung{
+    font-size: 1.6em;
+    font-family:Delicious_Handrawn  ;
+    color: #fff;
+    background-color: rgba(255, 0, 0, 0.74);
+    padding: .5em;
+    text-align: center;
+    border-radius: 1em;
 }
