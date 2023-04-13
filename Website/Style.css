@@ -6,12 +6,14 @@ html, body{
     width: 100%;
 }
 body{
+    height: 100vh;
     min-width: 800px;
     padding: 0;
     margin: 0;
     overflow-x: hidden;
     background-image: linear-gradient(-45deg,#00d9ff,#ff00dd);
     background-attachment: fixed;
+    overflow: hidden;
 }
 header{
     width: 100%;
@@ -19,7 +21,6 @@ header{
   z-index: 999;
     position: fixed;
     position: -webkit-sticky;
-    /*background-color: #00d9ff;*/
 }
 header a{
     position: relative;
@@ -116,12 +117,13 @@ dd::after {
 
 
 main {
-
-    margin: 50px; /* Platz für die Navigationsleiste */
+    position: relative;
+    height: 77vh;
+    margin:146px 50px 0 50px ;
     padding: 20px;
     font-size: 1.2em;
     line-height: 1.5;
-    margin-top: 9em ;
+    overflow-y: scroll;
     /*background-color: rgba(0, 0, 0, 0.432);*/
 }
 .input{
@@ -171,3 +173,15 @@ p.warnung{
     text-align: center;
     border-radius: 1em;
 }
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #f1f1f128; 
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #8888886b; 
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #ffffffa6; 
+  }
