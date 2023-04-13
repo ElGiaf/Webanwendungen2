@@ -36,6 +36,7 @@ header{
     padding: .5%;
     position: relative;
     z-index: 998;
+    
 }
 a:hover{
     filter: brightness(.75);
@@ -91,9 +92,28 @@ input{
     color: #fff;
 }
 
-table {
-    border:1;
+dl{
+	margin-top:15px;
+    
 }
+
+dt {
+  float: left;
+  font-weight: bold;
+  margin-right: 0.5em;
+ 
+}
+
+
+
+dd::after {
+    clear: left;
+    content: " ";
+    display: block;
+    margin-top:15px;
+  }
+
+
 main {
 
     margin: 50px; /* Platz für die Navigationsleiste */
