@@ -118,8 +118,6 @@ dt img{
 }
 
 
-
-
 dd::after {
     clear: left;
     content: " ";
@@ -165,8 +163,30 @@ main {
     font-size: 1.2em;
     line-height: 1.5;
     overflow-y: scroll;
+    color: #fff;
+    text-align: justify;
     /*background-color: rgba(0, 0, 0, 0.432);*/
 }
+
+p{
+    height: 1.5em;
+}
+.mainrechts{
+    float:right;
+    margin-left: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    position: relative;
+}
+
+.mainlinks{
+    float:left;
+    margin-right: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    position: relative;
+}
+
 button{
     font-family:Delicious_Handrawn;
     font-size: 1.6em;
