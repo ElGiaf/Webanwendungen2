@@ -170,6 +170,12 @@ main {
 
 p{
     height: 1.5em;
+    
+}
+
+.maintext{
+    padding-left: 5%;
+    padding-right: 5%;
 }
 .mainrechts{
     float:right;
