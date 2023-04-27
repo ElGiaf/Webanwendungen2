@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Hauptseite</title>
 	<link rel="stylesheet" href="Style.css">
-	<script src="JS.js"></script>
+	<script src="DataDump.js"></script>
 </head>
 <body>
 	<!-- HTML-Struktur für Titel und Konto-Verweis -->
@@ -45,43 +45,45 @@
 	<main>
 		<form id="user">
 			<label>user
-			<input type="text" id="userName" placeholder="Name">
-			<input type="text" id="userEmail" placeholder="Email">
-			<input type="text" id="userPasswort" placeholder="Passwort">
-			<input type="submit" id="user"></label>
-		</form>
-		<form>
-			<label>Vernasteltung
-			<input type="text" id="VernasteltungName" placeholder="name">
-			<input type="file" id="VernasteltungLogo" placeholder="Logo">
-			<input type="file" id="VernasteltungBilder" placeholder="Bilder">
-			<input type="date" id="VernasteltungStert" placeholder="Start">
-			<input type="date" id="VernasteltungEnde" placeholder="Ende">
-			<textarea type="text" id="Vernasteltungtext" placeholder="Text"></textarea>
-			<input type="submit"></label>
-		</form>
-		<form>
-			<label>Künstler
-			<input type="text" id="KünstlerName" placeholder="name">
-			<input type="file" id="KünstlerBild" placeholder="Bild">
-			<textarea type="text" id="KünstlerKurzText" placeholder="kurz Text"></textarea>
-			<input type="file" id="KünstlerBilder" placeholder="Bilderreihe">
-			<textarea type="text" id="KünstlerLangText" placeholder="lang Text"></textarea>
-			<input type="submit"></label>
-		</form>
-		<form>
-			<label>	Preise
-			<input type="number" id="Vernasteltung" placeholder="Vernasteltung">
-			<input type="text" id="klasse" placeholder="text">
-			<input type="number" id="preis" placeholder="Preis">
-			<input type="number" id="anzahl" placeholder="anzahl">
-			<input type="date" id="vstart" placeholder="vstart"></label>
-		</form>
-		<form>
-			<label>	Auftritt
-			<input type="number" id="Künstler" placeholder="Künstler">
-			<input type="number" id="Vernasteltung" placeholder="Vernasteltung">
+			<input type="text" name="userName" placeholder="Name" required>
+			<input type="email" name="userEmail" placeholder="Email" required>
+			<input type="password" name="userPasswort" placeholder="Passwort" required>
+			<Button type="submit">Absenden</Button>
 			</label>
+		</form>
+		<form id="Veranstaltung">
+			<label>Vernasteltung
+			<input type="text" name="VeranstaltungName" placeholder="name" required>
+			<input type="file" name="VeranstaltungLogo" placeholder="Logo" required>
+			<input type="file" name="VeranstaltungBilder" placeholder="Bilder" multiple required>
+			<input type="date" name="VeranstaltungStart" placeholder="Start" required>
+			<input type="date" name="VeranstaltungEnde" placeholder="Ende">
+			<textarea type="text" name="VeranstaltungText" placeholder="Text" required></textarea>
+			<Button type="submit">Absenden</Button></label>
+		</form>
+		<form id="Künstler">
+			<label>Künstler
+			<input type="text" name="KünstlerName" placeholder="name" required>
+			<input type="file" name="KünstlerBild" placeholder="Bild" required>
+			<textarea type="text" name="KünstlerKurzText" placeholder="kurz Text" required></textarea>
+			<input type="file" name="KünstlerBilder" placeholder="Bilderreihe" required>
+			<textarea type="text" name="KünstlerLangText" placeholder="lang Text"></textarea>
+			<Button type="submit">Absenden</Button></label>
+		</form>
+		<form id="Preise">
+			<label>	Preise
+			<input type="number" name="Vernasteltung" placeholder="Vernasteltung" required> 
+			<input type="text" name="klasse" placeholder="text" required>
+			<input type="number" name="preis" placeholder="Preis" required>
+			<input type="number" name="anzahl" placeholder="anzahl" required>
+			<input type="date" name="vstart" placeholder="vstart" required>
+			<Button type="submit">Absenden</Button></label>
+		</form>
+		<form id="Auftritt">
+			<label>	Auftritt
+			<input type="number" name="Künstler" placeholder="Künstler" required>
+			<input type="number" name="Vernasteltung" placeholder="Vernasteltung" required>
+			<Button type="submit">Absenden</Button></label>
 		</form>
 	</main>
 </body>
