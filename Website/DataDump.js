@@ -1,3 +1,4 @@
+let db;const sqlite3 = require('sqlite3').verbose();
 window.addEventListener('DOMContentLoaded', init);
 
 let userin;
@@ -6,7 +7,13 @@ let Künstlerin;
 let Preisein;
 let Auftrittin;
 
+
 function init(){
+    /*--------------------------------einfügen-------------------------------------*/
+    
+    db = new sqlite3.Database('./DB/data.db');
+    console.log('data startet');
+    /*--------------------------------einfügen-------------------------------------*/
     userin = document.getElementById('user');
     veranstaltungin = document.getElementById('Veranstaltung');
     Künstlerin = document.getElementById('Künstler');
@@ -26,6 +33,7 @@ function user(event){
     const email = formData.get('userEmail');
     const passwort = formData.get('userPasswort');
     console.log(name,email,passwort);
+    db.run('INSERT INTO user (Name,Email,Passwort) VALUES ('+name+','+email+','+passwort+')');
     userin.reset();
 }
 
@@ -73,3 +81,15 @@ function Auftritt(event){
     console.log(VeranstaltungID,KünstlerID);
     Preisein.reset();
 }
+
+function Merken(event){
+    event.preventDefault();
+    const formData = new FormData(Auftrittin)
+    const VeranstaltungID = formData.get('Vernasteltung');
+    const userID = formData.get('User');
+    console.log(VeranstaltungID,userID);
+    Preisein.reset();
+}
+
+
+
