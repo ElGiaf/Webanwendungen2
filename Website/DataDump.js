@@ -1,9 +1,11 @@
 window.addEventListener('DOMContentLoaded', init);
+
 let userin;
 let veranstaltungin;
 let Künstlerin;
 let Preisein;
 let Auftrittin;
+
 function init(){
     userin = document.getElementById('user');
     veranstaltungin = document.getElementById('Veranstaltung');
@@ -16,6 +18,7 @@ function init(){
     Preisein.addEventListener('submit',(event) => {Preise(event)});
     Auftrittin.addEventListener('submit',(event) => {Auftritt(event)});
 }
+
 function user(event){
     event.preventDefault();
     const formData = new FormData(userin)
