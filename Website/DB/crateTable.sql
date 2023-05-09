@@ -33,3 +33,9 @@ CREATE TABLE Auftritt(
     AID integer PRIMARY KEY,
     Künstler REFERENCES Künstler(KID) not null,
     Veranstaltung REFERENCES Veranstaltung(VID) not null);
+
+CREATE TABLE Merken(
+    MID Integer PRIMARY KEY,
+    UID REFERENCES user(UserID) not NULL,
+    VID REFERENCES Veranstaltung(VID) not NULL
+);
