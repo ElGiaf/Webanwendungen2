@@ -5,7 +5,7 @@ let veranstaltungin;
 let Künstlerin;
 let Preisein;
 let Auftrittin;
-
+let url = "http://localhost:8080/upload/";
 
 function init(){
     
@@ -21,6 +21,32 @@ function init(){
     Auftrittin.addEventListener('submit',(event) => {Auftritt(event)});
 }
 
+/*function sendFetch(request){
+    fetch(request)
+        .then((response) => response.json())
+        .then((data) => {
+        console.log("Antwort vom Server:", data);
+        if
+        myForm.reset();
+        })
+        .catch((error) => {
+        console.warn(error);
+        });
+}*/
+async function makeRequest(request) {
+    try {
+      const response = await fetch(request);
+      const data = await response.json();
+  
+      console.log('Antwort:', data);
+      return data;
+    } catch (error) {
+      console.error('Fehler bei der Anfrage:', error);
+    }
+  }
+
+  
+
 function user(event){
     event.preventDefault();
     const formData = new FormData(userin)
@@ -28,7 +54,18 @@ function user(event){
     const email = formData.get('userEmail');
     const passwort = formData.get('userPasswort');
     console.log(name,email,passwort);
-    userin.reset();
+    const data = [name,email,passwort]
+    const request = new Request(url+'/user', {
+        body: formData,
+        method: "POST",
+    });
+    const res = makeRequest(request);
+    if(res == true){
+        userin.reset();
+    }
+    else{
+        document.getElementById('userEmail').style.backgroundColor = "red";
+    }
 }
 
 function Veranstaltung(event){

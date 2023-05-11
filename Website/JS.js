@@ -1,4 +1,4 @@
-function init(){
+/*function init(){
   
   window.addEventListener('scroll', () => {
     if (window.scrollY > 0) {
@@ -11,7 +11,7 @@ function init(){
   });
 }
 window.addEventListener('DOMContentLoaded', init);
-
+*/
 var http = require('http');
 var fs = require('fs');
 http.createServer(function (req, res) {
