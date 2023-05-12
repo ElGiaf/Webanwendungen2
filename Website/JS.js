@@ -1,4 +1,4 @@
-function init(){
+/*function init(){
   
   window.addEventListener('scroll', () => {
     if (window.scrollY > 0) {
@@ -10,18 +10,19 @@ function init(){
     }
   });
 }
-window.addEventListener('DOMContentLoaded', init);
+window.addEventListener('DOMContentLoaded', init);*/
 
-var http = require('http');
-var fs = require('fs');
+/*const express = require('express');
+const http = require('http');
+const fs = require('fs');
 http.createServer(function (req, res) {
   fs.readFile('main.html', function(err, data) {
     res.writeHead(200, {'Content-Type': 'text/html'});
     res.write(data);
     return res.end();
   });
-}).listen(8080);
-/* Require in some of the native stuff that comes with Node
+}).listen(8080);*/
+//Require in some of the native stuff that comes with Node
 var http = require('http');
 var url = require('url');
 var path = require('path');
@@ -97,4 +98,4 @@ http.createServer(function (request, response) {
 
     });
 
-}).listen(parseInt(port, 10));*/
+}).listen(parseInt(port, 10));
