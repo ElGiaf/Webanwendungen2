@@ -30,6 +30,7 @@ app.use(bodyParser.json());
 app.get('/data', (req, res) => {
   // Sende die HTML-Datei als Antwort auf die Anfrage
   res.sendFile(path.join(__dirname, 'public', 'DataDump.html'));
+  
 });
   
 function getID(query){
