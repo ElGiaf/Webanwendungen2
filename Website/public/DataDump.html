@@ -46,12 +46,12 @@
 		<form id="user">
 			<label>user
 			<input type="text"  name="userName" placeholder="Name" required>
-			<input type="email"  name="userEmail" placeholder="Email" required>
+			<input type="email" id="userEmail"  name="userEmail" placeholder="Email" required>
 			<input type="password"  name="userPasswort" placeholder="Passwort" required>
 			<Button type="submit">Absenden</Button>
 			</label>
 		</form>
-		<form id="Veranstaltung" action="/upload" method="post" enctype="multipart/form-data">
+		<form id="Veranstaltung">
 			<label>Vernasteltung
 			<input type="text" name="VeranstaltungName" placeholder="name" required>
 			<input type="file" name="VeranstaltungLogo" placeholder="Logo" required>
@@ -63,7 +63,7 @@
 		</form>
 		<form id="Künstler">
 			<label>Künstler
-			<input type="text" name="KünstlerName" placeholder="name" required>
+			<input type="text" id="KünstlerName" name="KünstlerName" placeholder="name" required>
 			<input type="file" name="KünstlerBild" placeholder="Bild" required>
 			<textarea type="text" name="KünstlerKurzText" placeholder="kurz Text" required></textarea>
 			<input type="file" name="KünstlerBilder" placeholder="Bilderreihe" required>
