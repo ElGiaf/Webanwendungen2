@@ -19,6 +19,8 @@ const storage = multer.diskStorage({
     },
   });
 const upload = multer({ storage: storage });
+let reptrue = {valid:1};
+let repfalse  = {valid:0}
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -60,9 +62,9 @@ function getID(query){
           db.run('INSERT INTO user (UserID,Name,Email,Passwort) VALUES (?,?,?,?)',[id,name,email,passwort], (err) => {
             if (err) {
               console.log('unique constraint');
-              response.json({valid: false});
+              response.json(repfalse);
             } else {
-              response.json({valid: true});
+              response.json(reptrue);
             }
           }
         )}
@@ -76,18 +78,18 @@ function getID(query){
     const ende = request.body.VeranstaltungEnde;
     const text = request.body.VeranstaltungText;
     console.log(name,logo, Bilder,start,ende,text);
-    const query = "SELECT COUNT(*) AS count FROM Veranstaltung";
+    /*const query = "SELECT COUNT(*) AS count FROM Veranstaltung";
     const id = getID(query);
     console.log(id,name,email,passwort);
       db.run('INSERT INTO Veranstaltung (VID, name, Logo, Bilder, startDate, endDate, InfoText) VALUES (?,?,?,?,?,?,?)',[id,name,logo, Bilder,start,ende,text], (err) => {
         if (err) {
           console.log('unique constraint');
-          response.json({valid: false});
+          response.json(repfalse);
         } else {
-          response.json({valid: true});
+          response.json(reptrue);
         }
       }
-    )}
+    )*/}
   );
 
   
