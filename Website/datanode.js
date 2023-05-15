@@ -7,6 +7,7 @@ const multer  = require('multer');
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const bodyParser = require('body-parser');
+const { get } = require('https');
 
 let db = new sqlite3.Database('./DB/data.db');
 const app = express();
@@ -50,9 +51,19 @@ function getID(query){
   });
 }
   
+
+db.all("SELECT UserID,Name,Email FROM user", [], (err, rows) => {
+  if (err) {
+    console.log("error");
+  }
+  rows.forEach((row) => {
+    
+    console.log(row.UserID,row.Name,row.Email);
+  });
+});
   
   
-  app.post("/upload/user", upload.single("User"), (request, response) => {
+ app.post("/upload/user", upload.single("User"), (request, response) => {
     console.log(request.body);
     const name = request.body.userName;
     const email = request.body.userEmail;
@@ -70,7 +81,7 @@ function getID(query){
           }
         )}
   );
-  app.post("/upload/veranstaltung", upload.array("Veranstaltung"), (request, response) => {
+ app.post("/upload/veranstaltung", upload.array("Veranstaltung"), (request, response) => {
     console.log(request.body);
     const name = request.body.VeranstaltungName;
     const logo = request.body.VeranstaltungLogo;
@@ -90,8 +101,8 @@ function getID(query){
           response.json(reptrue);
         }
       }
-    )*/}
-  );
+    )*/
+  });
 
   
     // Bildinformationen in die SQLite-Datenbank schreiben
