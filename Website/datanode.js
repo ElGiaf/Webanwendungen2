@@ -13,7 +13,7 @@ const app = express();
 const appServer = express();
 const port = 8080;
 const storage = multer.diskStorage({
-    destination: "./images/",
+    destination: "./public/Bilder/",
     filename: function (request, file, callback) {
       callback(null, Date.now() + "-" + file.originalname);
     },
@@ -60,13 +60,36 @@ function getID(query){
           db.run('INSERT INTO user (UserID,Name,Email,Passwort) VALUES (?,?,?,?)',[id,name,email,passwort], (err) => {
             if (err) {
               console.log('unique constraint');
-              response.json(false);
+              response.json({valid: false});
             } else {
-              response.json(true);
+              response.json({valid: true});
             }
           }
         )}
-      );
+  );
+  app.post("/upload/veranstaltung", upload.array("Veranstaltung"), (request, response) => {
+    console.log(request.body);
+    const name = request.body.VeranstaltungName;
+    const logo = request.body.VeranstaltungLogo;
+    const Bilder = request.body.VeranstaltungBilder;
+    const start = request.body.VeranstaltungStart;
+    const ende = request.body.VeranstaltungEnde;
+    const text = request.body.VeranstaltungText;
+    console.log(name,logo, Bilder,start,ende,text);
+    const query = "SELECT COUNT(*) AS count FROM Veranstaltung";
+    const id = getID(query);
+    console.log(id,name,email,passwort);
+      db.run('INSERT INTO Veranstaltung (VID, name, Logo, Bilder, startDate, endDate, InfoText) VALUES (?,?,?,?,?,?,?)',[id,name,logo, Bilder,start,ende,text], (err) => {
+        if (err) {
+          console.log('unique constraint');
+          response.json({valid: false});
+        } else {
+          response.json({valid: true});
+        }
+      }
+    )}
+  );
+
   
     // Bildinformationen in die SQLite-Datenbank schreiben
     

@@ -21,25 +21,13 @@ function init(){
     Auftrittin.addEventListener('submit',(event) => {Auftritt(event)});
 }
 
-/*function sendFetch(request){
-    fetch(request)
-        .then((response) => response.json())
-        .then((data) => {
-        console.log("Antwort vom Server:", data);
-        if
-        myForm.reset();
-        })
-        .catch((error) => {
-        console.warn(error);
-        });
-}*/
-async function makeRequest(request) {
+function makeRequest(request) {
     try {
-      const response = await fetch(request);
-      const data = await response.json();
+      const response = fetch(request);
+      const data = response.json();
   
       console.log('Antwort:', data);
-      return data;
+      return data.valid;
     } catch (error) {
       console.error('Fehler bei der Anfrage:', error);
     }
@@ -55,16 +43,17 @@ function user(event){
     const passwort = formData.get('userPasswort');
     console.log(name,email,passwort);
     const data = [name,email,passwort]
-    const request = new Request(url+'/user', {
+    const request = new Request(url+'user', {
         body: formData,
         method: "POST",
     });
     const res = makeRequest(request);
-    if(res == true){
+    if(res){
         userin.reset();
     }
-    else{
+    if(!res){
         document.getElementById('userEmail').style.backgroundColor = "red";
+        console.log('email falsch');
     }
 }
 
@@ -78,7 +67,16 @@ function Veranstaltung(event){
     const ende = formData.get('VeranstaltungEnde');
     const text = formData.get('VeranstaltungText');
     console.log(name,logo, Bilder,start,ende,text);
-    veranstaltungin.reset();
+    //const data = [name,logo, Bilder,start,ende,text]
+    const request = new Request(url+'veranstaltung', {
+        body: formData,
+        method: "POST",
+    });
+    const res = makeRequest(request);
+    if(res){
+        veranstaltungin.reset();
+    }
+    
 }
 
 function Künstler(event){
@@ -90,7 +88,20 @@ function Künstler(event){
     const bilder = formData.get('KünstlerBilder');
     const textLang = formData.get('KünstlerLangText');
     console.log(name,Bild,textKurz,bilder,textLang);
-    Künstlerin.reset();
+    //const data = [name,Bild,textKurz,bilder,textLang]
+    const request = new Request(url+'user', {
+        body: formData,
+        method: "POST",
+    });
+    const res = makeRequest(request);
+    if(res){
+        Künstlerin.reset();
+    }
+    if(!res){
+        document.getElementById('KünstlerName').style.backgroundColor = "red";
+        console.log('Name bereits vorhanden');
+    }
+    
 }
 
 function Preise(event){
@@ -102,7 +113,16 @@ function Preise(event){
     const anzahl = formData.get('anzahl');
     const vstart = formData.get('vstart');
     console.log(VeranstaltungID,klasse,preis,anzahl,vstart);
-    Preisein.reset();
+    //const data = [VeranstaltungID,klasse,preis,anzahl,vstart]
+    const request = new Request(url+'user', {
+        body: formData,
+        method: "POST",
+    });
+    const res = makeRequest(request);
+    if(res){
+        Preisein.reset();
+    }
+    
 }
 function Auftritt(event){
     event.preventDefault();
@@ -110,7 +130,16 @@ function Auftritt(event){
     const VeranstaltungID = formData.get('Vernasteltung');
     const KünstlerID = formData.get('Künstler');
     console.log(VeranstaltungID,KünstlerID);
-    Preisein.reset();
+    //const data = [VeranstaltungID,KünstlerID]
+    const request = new Request(url+'user', {
+        body: formData,
+        method: "POST",
+    });
+    const res = makeRequest(request);
+    if(res){
+        Preisein.reset();
+    }
+    
 }
 
 function Merken(event){
@@ -119,5 +148,14 @@ function Merken(event){
     const VeranstaltungID = formData.get('Vernasteltung');
     const userID = formData.get('User');
     console.log(VeranstaltungID,userID);
-    Preisein.reset();
+    //const data = [VeranstaltungID,userID]
+    const request = new Request(url+'user', {
+        body: formData,
+        method: "POST",
+    });
+    const res = makeRequest(request);
+    if(res){
+        Preisein.reset();
+    }
+   
 }
