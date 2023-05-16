@@ -162,9 +162,9 @@ dd::after {
 
 main {
     position: relative;
-    height: 77vh;
+    height: 100vh;
     margin:146px 50px 0 50px ;
-    padding: 20px;
+    /*padding: 20px;*/
     font-size: 1.2em;
     line-height: 1.5;
     overflow-y: scroll;

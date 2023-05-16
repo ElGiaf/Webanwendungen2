@@ -172,27 +172,17 @@ db.all("SELECT UserID,Name,Email FROM user WHERE UserID=13", [], (err, rows) => 
     });
   });
   
-  app.post("/Festival/get", (request, response) => {
-    console.log('request body: ',request.name,request.von,request.bis);
-    const name = request.name;
-    const von = request.von;
-    const bis = request.bis;
-    console.log('name: ',name);
-    //db.all('SELECT * FROM Veranstaltung where name LIKE ? and startDate > ? and endDate < ? and endDate not null',['%'+name+'%',von,bis],(err,rows) => {
-      db.all('SELECT * FROM Veranstaltung where name like ?',['%'+name+'%'],(err,rows) => {
+  app.post('/Festivals/get', (req, res) => {
+    // extract data from request body
+    const name = req.body.name;
+    const von = req.body.von;
+    const bis = req.body.bis;
+    console.log('name: ',name ,von, bis);
+      db.all('SELECT * FROM Veranstaltung where name like ? an startDate >= ? and endDate <= ?',['%'+name+'%',von, bis],(err,rows) => {
       if (err) {
         throw err;
       }
-      rows.forEach((row) => {
-        const name = row.name;
-        const logo = row.Logo;
-        const Bilder = row.Bilder;
-        const start = row.startDate;
-        const ende = row.endDate;
-        const text = row.InfoText;
-        console.log(row,name,logo,Bilder,start,ende,text);
-      })
-        response.status(200).json({ valid: true, rows: rows });
+        res.status(200).json({ valid: true, rows: rows });
     });
   });
     // Bildinformationen in die SQLite-Datenbank schreiben
