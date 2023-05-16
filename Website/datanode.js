@@ -20,23 +20,6 @@ const storage = multer.diskStorage({
   });
 const upload = multer({ storage: storage });
 
-  const checkFileType = function (file, cb) {
-    //Allowed file extensions
-    const fileTypes = /jpeg|jpg|png|gif|svg/;
-  
-    //check extension names
-    const extName = fileTypes.test(path.extname(file.originalname).toLowerCase());
-  
-    const mimeType = fileTypes.test(file.mimetype);
-  
-    if (mimeType && extName) {
-      return cb(null, true);
-    } else {
-      cb("Error: You can Only Upload Images!!");
-    }
-  };
-
-
 let reptrue = {valid:true};
 let repfalse  = {valid:false}
 
@@ -53,7 +36,12 @@ app.get('/data', (req, res) => {
 });
 app.get('/Festivals', (req, res) => {
   // Sende die HTML-Datei als Antwort auf die Anfrage
-  res.sendFile(path.join(__dirname, 'public', 'Festivals.html'));
+  res.sendFile(path.join(__dirname, 'public', 'Veranstaltung.html'));
+  
+});
+app.get('/Konzerte', (req, res) => {
+  // Sende die HTML-Datei als Antwort auf die Anfrage
+  res.sendFile(path.join(__dirname, 'public', 'Veranstaltung.html'));
   
 });
   

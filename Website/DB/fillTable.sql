@@ -13,3 +13,4 @@ CREATE TABLE test(
 );
 
 DELETE from user WHERE UserID > 12;
+DELETE FROM Veranstaltung WHERE VID = 4;

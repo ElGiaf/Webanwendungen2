@@ -9,8 +9,6 @@ let url = "http://localhost:8080/upload/";
 
 
 function init(){
-    testin= document.getElementById('test');
-    testin.addEventListener('submit',(event) => {test(event)})
     userin = document.getElementById('user');
     veranstaltungin = document.getElementById('Veranstaltung');
     Künstlerin = document.getElementById('Künstler');
@@ -39,37 +37,6 @@ function init(){
       }
     });
   }
-
-function test(event){
-    event.preventDefault();
-    const formData = new FormData();
-    const fileInput = document.getElementsByName('img')[0];
-if (fileInput && fileInput.files && fileInput.files.length > 0) {
-  formData.append('img', fileInput.files[0]);
-} else {
-  console.error('File input is missing or empty.');
-}
-    console.log(formData);
-    const request = new Request(url+'test', {
-        body: formData,
-        method: "POST",
-    });
-    const res = makeRequest(request);
-    if(res.valid){
-        testin.reset();
-        console.log('reset')
-        var img = document.createElement("img");
-        img.src = res.img;
-        var src = document.getElementById("test");
-        src.appendChild(img);
-    }else{
-        if(!res.valid){
-            console.log('falsch');
-        }
-    }
-    
-}
-
 
 function user(event){
     event.preventDefault();
@@ -113,102 +80,118 @@ function Veranstaltung(event){
     formData.append('start',document.getElementsByName('VStart')[0].value);
     formData.append('ende',document.getElementsByName('VEnde')[0].value);
     formData.append('text',document.getElementsByName('VText')[0].value);
-    const name= formData.get('name');
-    const logo= formData.get('logo');
-    const Bilder= formData.get('Bilder');
-    const start= formData.get('start');
-    const ende= formData.get('ende');
-    const text= formData.get('text');
-    console.log(formData, name,logo,Bilder,start,ende,text);
     const request = new Request(url+'veranstaltung', {
         body: formData,
         method: "POST",
     });
-    const res = makeRequest(request);
-    if(res){
-        veranstaltungin.reset();
-    }
-    
-}
-//noch nicht gemacht!!! -----------------------------------------------------------
+    makeRequest(request)
+      .then(res => {
+        if(res){
+            veranstaltungin.reset();
+        console.log('reset');
+        }else{
+            console.log('fehler');
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
 
 function Künstler(event){
     event.preventDefault();
-    const formData = new FormData(Künstlerin)
-    const name = formData.get('KünstlerName');
-    const Bild = formData.get('KünstlerBild');
-    const textKurz = formData.get('KünstlerKurzText');
-    const bilder = formData.get('KünstlerBilder');
-    const textLang = formData.get('KünstlerLangText');
-    console.log(name,Bild,textKurz,bilder,textLang);
-    //const data = [name,Bild,textKurz,bilder,textLang]
+    const formData = new FormData();
+    formData.append('name',document.getElementsByName('KünstlerName')[0].value);
+    formData.append('bild',document.getElementsByName('KünstlerBild')[0].files[0]);
+    formData.append('kText',document.getElementsByName('KünstlerKurzText')[0].value);
+    formData.append('bilder',document.getElementsByName('KünstlerBilder')[0].files[0]);
+    formData.append('lText',document.getElementsByName('KünstlerLangText')[0].value);
     const request = new Request(url+'user', {
         body: formData,
         method: "POST",
     });
-    const res = makeRequest(request);
-    if(res){
-        Künstlerin.reset();
-    }
-    if(!res){
-        document.getElementById('KünstlerName').style.backgroundColor = "red";
-        console.log('Name bereits vorhanden');
-    }
-    
-}
+    makeRequest(request)
+      .then(res => {
+        if(res){
+            Künstlerin.reset();
+        console.log('reset');
+        }else{
+            console.log('fehler');
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
 
 function Preise(event){
     event.preventDefault();
-    const formData = new FormData(Preisein)
-    const VeranstaltungID = formData.get('Vernasteltung');
-    const klasse = formData.get('klasse');
-    const preis = formData.get('preis');
-    const anzahl = formData.get('anzahl');
-    const vstart = formData.get('vstart');
-    console.log(VeranstaltungID,klasse,preis,anzahl,vstart);
-    //const data = [VeranstaltungID,klasse,preis,anzahl,vstart]
+    const formData = new FormData();
+    formData.append('veranstaltung',document.getElementsByName('Vernasteltung')[0].value);
+    formData.append('klasse',document.getElementsByName('klasse')[0].value);
+    formData.append('preis',document.getElementsByName('preis')[0].value);
+    formData.append('anzahl',document.getElementsByName('anzahl')[0].value);
+    formData.append('vstart',document.getElementsByName('vstart')[0].value);
     const request = new Request(url+'user', {
         body: formData,
         method: "POST",
     });
-    const res = makeRequest(request);
-    if(res){
-        Preisein.reset();
-    }
-    
-}
+    makeRequest(request)
+      .then(res => {
+        if(res){
+            userin.reset();
+        console.log('reset');
+        }else{
+            console.log('fehler');
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
 function Auftritt(event){
     event.preventDefault();
-    const formData = new FormData(Auftrittin)
-    const VeranstaltungID = formData.get('Vernasteltung');
-    const KünstlerID = formData.get('Künstler');
-    console.log(VeranstaltungID,KünstlerID);
-    //const data = [VeranstaltungID,KünstlerID]
+    const formData = new FormData();
+    formData.append('veranstaltung',document.getElementsByName('Vernasteltung')[0].value);
+    formData.append('Kuenstler',document.getElementsByName('Künstler')[0].value);
     const request = new Request(url+'user', {
         body: formData,
         method: "POST",
     });
-    const res = makeRequest(request);
-    if(res){
-        Preisein.reset();
-    }
-    
-}
+    makeRequest(request)
+      .then(res => {
+        if(res){
+            userin.reset();
+        console.log('reset');
+        }else{
+            console.log('fehler');
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
 
 function Merken(event){
     event.preventDefault();
-    const formData = new FormData(Auftrittin)
-    const VeranstaltungID = formData.get('Vernasteltung');
-    const userID = formData.get('User');
-    console.log(VeranstaltungID,userID);
-    //const data = [VeranstaltungID,userID]
+    const formData = new FormData();
+    formData.append('veranstaltung',document.getElementsByName('Vernasteltung')[0].value);
+    formData.append('veranstaltung',document.getElementsByName('User')[0].value);
     const request = new Request(url+'user', {
         body: formData,
         method: "POST",
     });
-    const res = makeRequest(request);
-    if(res){
-        Preisein.reset();
-    }
-   
-}
+    makeRequest(request)
+      .then(res => {
+        if(res){
+            userin.reset();
+        console.log('reset');
+        }else{
+            console.log('fehler');
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }

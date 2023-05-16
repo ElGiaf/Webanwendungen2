@@ -1,41 +1,16 @@
-//const { json } = require("body-parser");
 
 window.addEventListener('DOMContentLoaded', init);
-const url = 'http://localhost:8080/Festivals/'
+let url;
 
 function init(){
+    url = window.location.href;
     getFestival('',new Date(Date.now()),new Date(2050, 12, 30))
 }
-
-/*function getFestival(name,von,bis){
-    const data = JSON.stringify({'name':name,'von':von,'bis':bis});
-    /*const data = new FormData();
-    data.append('name',name);
-    data.append('von',von);
-    data.append('bis',bis);*/
-  /*  console.log(data.name)
-    const request = new Request(url+'get', {
-        body: data,
-        method: "POST",
-    });         
-    const res = makeRequest(request);
-    if(res.valid){
-        res.rows.forEach((row) => {
-            const name = row.name;
-            const logo = row.Logo;
-            const Bilder = row.Bilder;
-            const start = row.startDate;
-            const ende = row.endDate;
-            const text = row.InfoText;
-            console.log(name,logo,Bilder,start,ende,text);
-        })
-    }
-}*/
 
 function getFestival(name, von, bis) {
   const data = {'name':name,'von':von,'bis':bis};
   console.log(data.name);
-  const request = new Request(url+'get', {
+  const request = new Request(url+'/get', {
       body: JSON.stringify(data),
       method: "POST",
       headers: {
