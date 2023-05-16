@@ -7,7 +7,7 @@ const multer  = require('multer');
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const bodyParser = require('body-parser');
-const fileupload = require('express-fileupload');
+const { get } = require('https');
 
 let db = new sqlite3.Database('./DB/data.db');
 const app = express();
@@ -68,8 +68,31 @@ function getID(query){
     }
   });
 }
-  
-  
+
+db.all("SELECT UserID,Name,Email FROM user WHERE UserID=1 ", [], (err, rows) => {
+  if (err) {
+    console.log("error");
+  }
+  rows.forEach((row) => {
+    var a=row.UserID+row.Name+row.Email;
+    console.log(a +"neuuuu");
+    process.getElementById("DBTest").innerText=a;
+  });
+});  
+
+//Standard abfrage für die datenbank mit ausgabe auf der Konsole (SQL befehl wie gelernt eintragen)
+db.all("SELECT UserID,Name,Email FROM user WHERE UserID=13", [], (err, rows) => {
+  if (err) {
+    console.log("error");
+  }
+  rows.forEach((row) => { 
+    console.log(row.Name,row.Email);
+  }
+  );
+});
+
+ 
+
   
   app.post("/upload/user", (request, response) => {
     console.log(request.body);
@@ -89,7 +112,7 @@ function getID(query){
           }
         )}
   );
-  /*app.post("/upload/veranstaltung", upload.array("Veranstaltung"), (request, response) => {
+ /*app.post("/upload/veranstaltung", upload.array("Veranstaltung"), (request, response) => {
     console.log(request.body,request.files);
     const name = request.body.name;
     const logo = request.files.logo;
