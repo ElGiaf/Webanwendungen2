@@ -50,18 +50,31 @@ function getID(query){
     }
   });
 }
-  
 
-db.all("SELECT UserID,Name,Email FROM user", [], (err, rows) => {
+db.all("SELECT UserID,Name,Email FROM user WHERE UserID=1 ", [], (err, rows) => {
   if (err) {
     console.log("error");
   }
   rows.forEach((row) => {
-    
-    console.log(row.UserID,row.Name,row.Email);
+    var a=row.UserID+row.Name+row.Email;
+    console.log(a +"neuuuu");
+    process.getElementById("DBTest").innerText=a;
   });
+});  
+
+//Standard abfrage für die datenbank mit ausgabe auf der Konsole (SQL befehl wie gelernt eintragen)
+db.all("SELECT UserID,Name,Email FROM user WHERE UserID=13", [], (err, rows) => {
+  if (err) {
+    console.log("error");
+  }
+  rows.forEach((row) => { 
+    console.log(row.Name,row.Email);
+  }
+  );
 });
-  
+
+ 
+
   
  app.post("/upload/user", upload.single("User"), (request, response) => {
     console.log(request.body);
