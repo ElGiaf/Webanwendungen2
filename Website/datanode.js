@@ -51,6 +51,11 @@ app.get('/data', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'DataDump.html'));
   
 });
+app.get('/Festivals', (req, res) => {
+  // Sende die HTML-Datei als Antwort auf die Anfrage
+  res.sendFile(path.join(__dirname, 'public', 'Festivals.html'));
+  
+});
   
 function getID(query){
   db.get(query, (err, row) => {
@@ -142,28 +147,8 @@ db.all("SELECT UserID,Name,Email FROM user WHERE UserID=13", [], (err, rows) => 
           }
         )}
   );
- /*app.post("/upload/veranstaltung", upload.array("Veranstaltung"), (request, response) => {
-    console.log(request.body,request.files);
-    const name = request.body.name;
-    const logo = request.files.logo;
-    const Bilder = request.files.Bilder;
-    const start = request.body.start;
-    const ende = request.body.ende;
-    const text = request.body.text;
-    console.log(name,logo, Bilder,start,ende,text);
-    const query = "SELECT MAX(VID) AS count FROM Veranstaltung";
-    const id = getID(query);
-    console.log(id,name,email,passwort);
-      db.run('INSERT INTO Veranstaltung (VID, name, Logo, Bilder, startDate, endDate, InfoText) VALUES (?,?,?,?,?,?,?)',[id,name,logo, Bilder,start,ende,text], (err) => {
-        if (err) {
-          console.log('unique constraint');
-          response.json(repfalse);
-        } else {
-          response.json(reptrue);
-        }
-      }
-    )}
-  );*/
+
+
   app.post("/upload/veranstaltung", upload.fields([
     { name: "logo", maxCount: 1 },
     { name: "Bilder", maxCount: 1 }
@@ -187,8 +172,31 @@ db.all("SELECT UserID,Name,Email FROM user WHERE UserID=13", [], (err, rows) => 
     });
   });
   
+  app.post("/Festival/get", (request, response) => {
+    console.log('request body: ',request.name,request.von,request.bis);
+    const name = request.name;
+    const von = request.von;
+    const bis = request.bis;
+    console.log('name: ',name);
+    //db.all('SELECT * FROM Veranstaltung where name LIKE ? and startDate > ? and endDate < ? and endDate not null',['%'+name+'%',von,bis],(err,rows) => {
+      db.all('SELECT * FROM Veranstaltung where name like ?',['%'+name+'%'],(err,rows) => {
+      if (err) {
+        throw err;
+      }
+      rows.forEach((row) => {
+        const name = row.name;
+        const logo = row.Logo;
+        const Bilder = row.Bilder;
+        const start = row.startDate;
+        const ende = row.endDate;
+        const text = row.InfoText;
+        console.log(row,name,logo,Bilder,start,ende,text);
+      })
+        response.status(200).json({ valid: true, rows: rows });
+    });
+  });
     // Bildinformationen in die SQLite-Datenbank schreiben
-    
+  
   
   // Server starten
   app.listen(port, () => {
