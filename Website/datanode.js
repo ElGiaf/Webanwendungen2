@@ -7,10 +7,10 @@ const multer  = require('multer');
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const bodyParser = require('body-parser');
+const fileupload = require('express-fileupload');
 
 let db = new sqlite3.Database('./DB/data.db');
 const app = express();
-const appServer = express();
 const port = 8080;
 const storage = multer.diskStorage({
     destination: "./public/Bilder/",
@@ -19,12 +19,31 @@ const storage = multer.diskStorage({
     },
   });
 const upload = multer({ storage: storage });
-let reptrue = {valid:1};
-let repfalse  = {valid:0}
+
+  const checkFileType = function (file, cb) {
+    //Allowed file extensions
+    const fileTypes = /jpeg|jpg|png|gif|svg/;
+  
+    //check extension names
+    const extName = fileTypes.test(path.extname(file.originalname).toLowerCase());
+  
+    const mimeType = fileTypes.test(file.mimetype);
+  
+    if (mimeType && extName) {
+      return cb(null, true);
+    } else {
+      cb("Error: You can Only Upload Images!!");
+    }
+  };
+
+
+let reptrue = {valid:true};
+let repfalse  = {valid:false}
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(fileupload());
 
 // Definiere eine Route für die Startseite
 app.get('/data', (req, res) => {
@@ -52,12 +71,12 @@ function getID(query){
   
   
   
-  app.post("/upload/user", upload.single("User"), (request, response) => {
+  app.post("/upload/user", (request, response) => {
     console.log(request.body);
     const name = request.body.userName;
     const email = request.body.userEmail;
     const passwort = request.body.userPasswort;
-    const query = "SELECT COUNT(*) AS count FROM user";
+    const query = "SELECT MAX(UserID) AS count FROM user";
     const id = getID(query);
     console.log(id,name,email,passwort);
           db.run('INSERT INTO user (UserID,Name,Email,Passwort) VALUES (?,?,?,?)',[id,name,email,passwort], (err) => {
@@ -70,16 +89,16 @@ function getID(query){
           }
         )}
   );
-  app.post("/upload/veranstaltung", upload.array("Veranstaltung"), (request, response) => {
-    console.log(request.body);
-    const name = request.body.VeranstaltungName;
-    const logo = request.body.VeranstaltungLogo;
-    const Bilder = request.body.VeranstaltungBilder;
-    const start = request.body.VeranstaltungStart;
-    const ende = request.body.VeranstaltungEnde;
-    const text = request.body.VeranstaltungText;
+  /*app.post("/upload/veranstaltung", upload.array("Veranstaltung"), (request, response) => {
+    console.log(request.body,request.files);
+    const name = request.body.name;
+    const logo = request.files.logo;
+    const Bilder = request.files.Bilder;
+    const start = request.body.start;
+    const ende = request.body.ende;
+    const text = request.body.text;
     console.log(name,logo, Bilder,start,ende,text);
-    /*const query = "SELECT COUNT(*) AS count FROM Veranstaltung";
+    const query = "SELECT MAX(VID) AS count FROM Veranstaltung";
     const id = getID(query);
     console.log(id,name,email,passwort);
       db.run('INSERT INTO Veranstaltung (VID, name, Logo, Bilder, startDate, endDate, InfoText) VALUES (?,?,?,?,?,?,?)',[id,name,logo, Bilder,start,ende,text], (err) => {
@@ -90,9 +109,29 @@ function getID(query){
           response.json(reptrue);
         }
       }
-    )*/}
-  );
-
+    )}
+  );*/
+  app.post("/upload/veranstaltung", upload.fields([
+    { name: "logo", maxCount: 1 },
+    { name: "Bilder", maxCount: 1 }
+  ]), (req, res, next) => {
+    const { name, start, ende, text } = req.body;
+    console.log(name,start,ende,text);
+    const logo = req.files["logo"][0].filename;
+    const bilder = req.files["Bilder"][0].filename;
+  
+    const sql = "INSERT INTO Veranstaltung (name, Logo, Bilder, startDate, endDate, InfoText) VALUES (?, ?, ?, ?, ?, ?)";
+    const values = [name, logo, bilder, start, ende, text];
+  
+    db.run(sql, values, err => {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ success: false, message: "Error inserting data into database" });
+      } else {
+        res.status(200).json({ success: true, message: "Data successfully inserted into database" });
+      }
+    });
+  });
   
     // Bildinformationen in die SQLite-Datenbank schreiben
     

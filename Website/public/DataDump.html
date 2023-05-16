@@ -43,7 +43,7 @@
 	</style>
 	<!-- HTML-Struktur für den Hauptinhalt -->
 	<main>
-		<form id="user">
+		<form id="user" action="/upload/">
 			<label>user
 			<input type="text"  name="userName" placeholder="Name" required>
 			<input type="email" id="userEmail"  name="userEmail" placeholder="Email" required>
@@ -51,14 +51,14 @@
 			<Button type="submit">Absenden</Button>
 			</label>
 		</form>
-		<form id="Veranstaltung">
+		<form id="Veranstaltung" action="/upload/veranstaltung" method="post" enctype="multipart/form-data">
 			<label>Vernasteltung
-			<input type="text" name="VeranstaltungName" placeholder="name" required>
-			<input type="file" name="VeranstaltungLogo" placeholder="Logo" required>
-			<input type="file" name="VeranstaltungBilder" placeholder="Bilder" multiple required>
-			<input type="date" name="VeranstaltungStart" placeholder="Start" required>
-			<input type="date" name="VeranstaltungEnde" placeholder="Ende">
-			<textarea type="text" name="VeranstaltungText" placeholder="Text" required></textarea>
+			<input type="text" name="VName" placeholder="name" required>
+			<input type="file" name="VLogo" placeholder="Logo" required>
+			<input type="file" name="VBilder" placeholder="Bilder" required>
+			<input type="date" name="VStart" placeholder="Start" required>
+			<input type="date" name="VEnde" placeholder="Ende">
+			<textarea type="text" name="VText" placeholder="Text" required></textarea>
 			<Button type="submit">Absenden</Button></label>
 		</form>
 		<form id="Künstler">
@@ -66,7 +66,7 @@
 			<input type="text" id="KünstlerName" name="KünstlerName" placeholder="name" required>
 			<input type="file" name="KünstlerBild" placeholder="Bild" required>
 			<textarea type="text" name="KünstlerKurzText" placeholder="kurz Text" required></textarea>
-			<input type="file" name="KünstlerBilder" placeholder="Bilderreihe" required>
+			<input type="file" name="KünstlerBilder" placeholder="Bilderreihe" multiple required>
 			<textarea type="text" name="KünstlerLangText" placeholder="lang Text"></textarea>
 			<Button type="submit">Absenden</Button></label>
 		</form>

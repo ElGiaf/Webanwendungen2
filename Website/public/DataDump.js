@@ -1,5 +1,5 @@
-window.addEventListener('DOMContentLoaded', init);
 
+window.addEventListener('DOMContentLoaded', init);
 let userin;
 let veranstaltungin;
 let Künstlerin;
@@ -7,8 +7,8 @@ let Preisein;
 let Auftrittin;
 let url = "http://localhost:8080/upload/";
 
+
 function init(){
-    
     userin = document.getElementById('user');
     veranstaltungin = document.getElementById('Veranstaltung');
     Künstlerin = document.getElementById('Künstler');
@@ -23,11 +23,14 @@ function init(){
 
 function makeRequest(request) {
     try {
-      const response = fetch(request);
-      const data = response.json();
-  
-      console.log('Antwort:', data);
-      return data.valid;
+        fetch(request)
+            .then(res => res.json())
+            .then((json) => {
+                let data= json.valid;
+                console.log('Antwort:', data);
+                return data;
+        });
+      
     } catch (error) {
       console.error('Fehler bei der Anfrage:', error);
     }
@@ -50,6 +53,7 @@ function user(event){
     const res = makeRequest(request);
     if(res){
         userin.reset();
+        console.log('reset')
     }
     if(!res){
         document.getElementById('userEmail').style.backgroundColor = "red";
@@ -57,17 +61,44 @@ function user(event){
     }
 }
 
+/*function Veranstaltung(event){
+    event.preventDefault();
+    const formData = new FormData()
+    formData.append('name',document.getElementsByName('VName').value);
+    formData.append('logo',document.getElementsByName('VLogo').file);
+    formData.append('Bilder',document.getElementsByName('VBilder').files);
+    formData.append('start',document.getElementsByName('VStart').value);
+    formData.append('ende',document.getElementsByName('VEnde').value);
+    formData.append('text',document.getElementsByName('VText').value);
+    console.log(formData);
+    //const data = [name,logo, Bilder,start,ende,text]
+    const request = new Request(url+'veranstaltung', {
+        body: formData,
+        method: "POST",
+    });
+    const res = makeRequest(request);
+    if(res){
+        veranstaltungin.reset();
+    }
+    
+}
+*/
 function Veranstaltung(event){
     event.preventDefault();
-    const formData = new FormData(veranstaltungin)
-    const name = formData.get('VeranstaltungName');
-    const logo = formData.get('VeranstaltungLogo');
-    const Bilder = formData.get('VeranstaltungBilder');
-    const start = formData.get('VeranstaltungStart');
-    const ende = formData.get('VeranstaltungEnde');
-    const text = formData.get('VeranstaltungText');
-    console.log(name,logo, Bilder,start,ende,text);
-    //const data = [name,logo, Bilder,start,ende,text]
+    const formData = new FormData()
+    formData.append('name',document.getElementsByName('VName')[0].value);
+    formData.append('logo',document.getElementsByName('VLogo')[0].files[0]);
+    formData.append('Bilder',document.getElementsByName('VBilder')[0].files[0]);
+    formData.append('start',document.getElementsByName('VStart')[0].value);
+    formData.append('ende',document.getElementsByName('VEnde')[0].value);
+    formData.append('text',document.getElementsByName('VText')[0].value);
+    const name= formData.get('name');
+    const logo= formData.get('logo');
+    const Bilder= formData.get('Bilder');
+    const start= formData.get('start');
+    const ende= formData.get('ende');
+    const text= formData.get('text');
+    console.log(formData, name,logo,Bilder,start,ende,text);
     const request = new Request(url+'veranstaltung', {
         body: formData,
         method: "POST",
