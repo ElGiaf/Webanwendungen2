@@ -47,6 +47,7 @@ function getFestival(name, von, bis) {
         console.log(res);
         if(res.valid){
           res.rows.forEach((row) => {
+            const id = row.VID;
             const name = row.name;
             const logo = row.Logo;
             const Bilder = row.Bilder;
@@ -55,7 +56,7 @@ function getFestival(name, von, bis) {
             const text = row.InfoText;
             var container = document.getElementById('container');
             var paragraph = document.createElement('dl');
-            paragraph.innerHTML = "<dt><a><img src=\"Bilder/"+logo+"\" alt=\"\" class=\"festivals\"></a></dt><dd><h3>"+name+"</h3><p>"+text+"</p></dd>";
+            paragraph.innerHTML = "<dt><a href=\"Festivals/"+id+"\"><img src=\"Bilder/"+logo+"\" alt=\"\" class=\"festivals\"></a></dt><dd><h3>"+name+"</h3><p>"+text+"</p></dd>";
             container.appendChild(paragraph);
           });
         }else{

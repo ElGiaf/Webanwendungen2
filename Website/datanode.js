@@ -178,7 +178,20 @@ db.all("SELECT UserID,Name,Email FROM user WHERE UserID=13", [], (err, rows) => 
     const von = req.body.von;
     const bis = req.body.bis;
     console.log('name: ',name ,von, bis);
-      db.all('SELECT * FROM Veranstaltung where name like ? an startDate >= ? and endDate <= ?',['%'+name+'%',von, bis],(err,rows) => {
+      db.all('SELECT * FROM Veranstaltung where name like ? and startDate >= ? and endDate <= ? and endDate is not null',['%'+name+'%',von, bis],(err,rows) => {
+      if (err) {
+        throw err;
+      }
+        res.status(200).json({ valid: true, rows: rows });
+    });
+  });
+
+  app.post('/Konzerte/get', (req, res) => {
+    // extract data from request body
+    const name = req.body.name;
+    const von = req.body.von;
+    console.log('name: ',name ,von);
+      db.all('SELECT * FROM Veranstaltung where name like ? and startDate >= ? and endDate is null',['%'+name+'%',von],(err,rows) => {
       if (err) {
         throw err;
       }
