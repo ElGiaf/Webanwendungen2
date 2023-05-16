@@ -9,6 +9,8 @@ let url = "http://localhost:8080/upload/";
 
 
 function init(){
+    testin= document.getElementById('test');
+    testin.addEventListener('submit',(event) => {test(event)})
     userin = document.getElementById('user');
     veranstaltungin = document.getElementById('Veranstaltung');
     Künstlerin = document.getElementById('Künstler');
@@ -21,24 +23,99 @@ function init(){
     Auftrittin.addEventListener('submit',(event) => {Auftritt(event)});
 }
 
-function makeRequest(request) {
+/*function makeRequest(request) {
     try {
         fetch(request)
             .then(res => res.json())
             .then((json) => {
                 let data= json.valid;
                 console.log('Antwort:', data);
-                return data;
+                return json.valid;
         });
       
     } catch (error) {
       console.error('Fehler bei der Anfrage:', error);
     }
+  }*/
+  function makeRequest(request) {
+    return new Promise((resolve, reject) => {
+      try {
+        fetch(request)
+          .then(res => res.json())
+          .then((json) => {
+            let data = json.valid;
+            console.log('Antwort:', data);
+            resolve(json);
+          });
+      } catch (error) {
+        console.error('Fehler bei der Anfrage:', error);
+        reject(error);
+      }
+    });
   }
 
-  
+function test(event){
+    event.preventDefault();
+    const formData = new FormData()
+    const fileInput = document.getElementsByName('img')[0];
+if (fileInput && fileInput.files && fileInput.files.length > 0) {
+  formData.append('img', fileInput.files[0]);
+} else {
+  console.error('File input is missing or empty.');
+}
+    console.log(formData);
+    const request = new Request(url+'test', {
+        body: formData,
+        method: "POST",
+    });
+    const res = makeRequest(request);
+    if(res.valid){
+        testin.reset();
+        console.log('reset')
+        var img = document.createElement("img");
+        img.src = res.img;
+        var src = document.getElementById("test");
+        src.appendChild(img);
+    }
+    if(!res.valid){
+        console.log('falsch');
+    }
+}
+
 
 function user(event){
+    event.preventDefault();
+    const formData = new FormData(userin)
+    const name = formData.get('userName');
+    const email = formData.get('userEmail');
+    const passwort = formData.get('userPasswort');
+    console.log(name,email,passwort);
+    const data = [name,email,passwort]
+    const request = new Request(url+'user', {
+      body: formData,
+      method: "POST",
+    });
+    makeRequest(request)
+      .then(res => {
+        if(res){
+            document.getElementById('userEmail').style.backgroundColor = '';
+            userin.reset();
+        console.log('reset');
+        }else{
+            if(!res){
+                document.getElementById('userEmail').style.backgroundColor = "red";
+                console.log('email falsch');
+            }else{
+                console.log('fehler');
+            }
+        }
+        
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+/*function user(event){
     event.preventDefault();
     const formData = new FormData(userin)
     const name = formData.get('userName');
@@ -59,7 +136,7 @@ function user(event){
         document.getElementById('userEmail').style.backgroundColor = "red";
         console.log('email falsch');
     }
-}
+} if is used bevore res returnes 
 
 /*function Veranstaltung(event){
     event.preventDefault();

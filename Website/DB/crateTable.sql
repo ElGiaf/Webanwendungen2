@@ -39,3 +39,6 @@ CREATE TABLE Merken(
     UID REFERENCES user(UserID) not NULL,
     VID REFERENCES Veranstaltung(VID) not NULL
 );
+
+
+

@@ -43,7 +43,11 @@
 	</style>
 	<!-- HTML-Struktur für den Hauptinhalt -->
 	<main>
-		<form id="user" action="/upload/">
+		<form id="test">
+			<input type="file" name="img" required>
+			<button type="submit">senden</button>
+		</form>
+		<form id="user">
 			<label>user
 			<input type="text"  name="userName" placeholder="Name" required>
 			<input type="email" id="userEmail"  name="userEmail" placeholder="Email" required>
