@@ -4,6 +4,7 @@ INSERT INTO user(UserID, Name , Email, Passwort) VALUES (1,'Robin','hallo@hallo.
 INSERT INTO user(UserID, Name , Email, Passwort) VALUES (2,'admin','hallo2@hallo.de', 'admin');
 SELECT * from user;
 SELECT * from test;
+SELECT * from Veranstaltung;
 
 
 CREATE TABLE test(

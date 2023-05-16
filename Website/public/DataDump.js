@@ -23,20 +23,6 @@ function init(){
     Auftrittin.addEventListener('submit',(event) => {Auftritt(event)});
 }
 
-/*function makeRequest(request) {
-    try {
-        fetch(request)
-            .then(res => res.json())
-            .then((json) => {
-                let data= json.valid;
-                console.log('Antwort:', data);
-                return json.valid;
-        });
-      
-    } catch (error) {
-      console.error('Fehler bei der Anfrage:', error);
-    }
-  }*/
   function makeRequest(request) {
     return new Promise((resolve, reject) => {
       try {
@@ -56,7 +42,7 @@ function init(){
 
 function test(event){
     event.preventDefault();
-    const formData = new FormData()
+    const formData = new FormData();
     const fileInput = document.getElementsByName('img')[0];
 if (fileInput && fileInput.files && fileInput.files.length > 0) {
   formData.append('img', fileInput.files[0]);
@@ -76,10 +62,12 @@ if (fileInput && fileInput.files && fileInput.files.length > 0) {
         img.src = res.img;
         var src = document.getElementById("test");
         src.appendChild(img);
+    }else{
+        if(!res.valid){
+            console.log('falsch');
+        }
     }
-    if(!res.valid){
-        console.log('falsch');
-    }
+    
 }
 
 
@@ -115,51 +103,7 @@ function user(event){
         console.log(error);
       });
   }
-/*function user(event){
-    event.preventDefault();
-    const formData = new FormData(userin)
-    const name = formData.get('userName');
-    const email = formData.get('userEmail');
-    const passwort = formData.get('userPasswort');
-    console.log(name,email,passwort);
-    const data = [name,email,passwort]
-    const request = new Request(url+'user', {
-        body: formData,
-        method: "POST",
-    });
-    const res = makeRequest(request);
-    if(res){
-        userin.reset();
-        console.log('reset')
-    }
-    if(!res){
-        document.getElementById('userEmail').style.backgroundColor = "red";
-        console.log('email falsch');
-    }
-} if is used bevore res returnes 
 
-/*function Veranstaltung(event){
-    event.preventDefault();
-    const formData = new FormData()
-    formData.append('name',document.getElementsByName('VName').value);
-    formData.append('logo',document.getElementsByName('VLogo').file);
-    formData.append('Bilder',document.getElementsByName('VBilder').files);
-    formData.append('start',document.getElementsByName('VStart').value);
-    formData.append('ende',document.getElementsByName('VEnde').value);
-    formData.append('text',document.getElementsByName('VText').value);
-    console.log(formData);
-    //const data = [name,logo, Bilder,start,ende,text]
-    const request = new Request(url+'veranstaltung', {
-        body: formData,
-        method: "POST",
-    });
-    const res = makeRequest(request);
-    if(res){
-        veranstaltungin.reset();
-    }
-    
-}
-*/
 function Veranstaltung(event){
     event.preventDefault();
     const formData = new FormData()
@@ -186,6 +130,7 @@ function Veranstaltung(event){
     }
     
 }
+//noch nicht gemacht!!! -----------------------------------------------------------
 
 function Künstler(event){
     event.preventDefault();
