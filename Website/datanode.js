@@ -147,8 +147,16 @@ db.all("SELECT UserID,Name,Email FROM user WHERE UserID=13", [], (err, rows) => 
     const bilder = req.files["Bilder"][0].filename;
     const query = "SELECT MAX(VID) AS count FROM Veranstaltung";
     const id = getID(query);
-    const sql = "INSERT INTO Veranstaltung (VID,name, Logo, Bilder, startDate, endDate, InfoText) VALUES (?, ?, ?, ?, ?, ?, ?)";
-    const values = [id,name, logo, bilder, start, ende, text];
+    let sql;
+    let values;
+    if(ende == ''){
+      sql = "INSERT INTO Veranstaltung (VID,name, Logo, Bilder, startDate, InfoText) VALUES (?, ?, ?, ?, ?, ?)";
+      values = [id,name, logo, bilder, start, text];
+    }else{
+      sql = "INSERT INTO Veranstaltung (VID,name, Logo, Bilder, startDate, endDate, InfoText) VALUES (?, ?, ?, ?, ?, ?, ?)";
+      values = [id,name, logo, bilder, start, ende, text];
+    }
+    
   
     db.run(sql, values, err => {
       if (err) {
