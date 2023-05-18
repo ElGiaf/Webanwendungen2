@@ -4,10 +4,30 @@ let url;
 
 function init(){
     url = window.location.href;
-    getFestival('',new Date(Date.now()),new Date(2050, 12, 30))
+    const von=document.getElementById('von');
+    von.addEventListener('input',()=>{searchV()});
+    const bis=document.getElementById('bis');
+    bis.addEventListener('input',()=>{searchV()});
+    const suche=document.getElementById('suche');
+    suche.addEventListener('input',()=>{searchV()});
+    getVeranstaltung('',new Date(Date.now()),new Date(3000, 12, 30))
 }
-
-function getFestival(name, von, bis) {
+function searchV(){
+  let von=document.getElementById('von').value;
+  if(von==""){
+    von=Date.now();
+  }
+  let bis=document.getElementById('bis').value;
+  console.log(bis);
+  if(bis==""){
+    bis= new Date(3000, 12, 30);
+  }
+  let name=document.getElementById('suche').value;
+  console.log(name,von,bis);
+  document.getElementById('container').innerHTML="";
+  getVeranstaltung(name,von,bis);
+}
+function getVeranstaltung(name, von, bis) {
   const data = {'name':name,'von':von,'bis':bis};
   console.log(data.name);
   const request = new Request(url+'/get', {
@@ -29,9 +49,10 @@ function getFestival(name, von, bis) {
             const start = row.startDate;
             const ende = row.endDate;
             const text = row.InfoText;
+            console.log(id,name,start,ende);
             var container = document.getElementById('container');
             var paragraph = document.createElement('dl');
-            paragraph.innerHTML = "<dt><a href=\"Festivals/"+id+"\"><img src=\"Bilder/"+logo+"\" alt=\"\" class=\"festivals\"></a></dt><dd><h3>"+name+"</h3><p>"+text+"</p></dd>";
+            paragraph.innerHTML = "<dt><a href=\""+url+"/"+id+"\"><img src=\"Bilder/"+logo+"\" alt=\"\" class=\"festivals\"></a></dt><dd><h3>"+name+"</h3><h4>"+start+", "+ende+"</h4><p>"+text+"</p></dd>";
             container.appendChild(paragraph);
           });
         }else{

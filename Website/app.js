@@ -41,16 +41,7 @@ app.get('/data', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'DataDump.html'));
 });
 app.get(['/Konzerte/:id','/Festivals/:id'], (req, res) => {
-  const id = req.params.id;
-  console.log(id);
-  db.all('SELECT * FROM Veranstaltung where VID = ?',id,(err,rows) => {
-    if (err) {
-      throw err;
-    }
-      console.log(rows[0])
-  });
-  // Sende die HTML-Datei als Antwort auf die Anfrage
-  res.sendFile(path.join(__dirname, 'public', 'Main.html'));
+  res.sendFile(path.join(__dirname, 'public', '/Main.html'));
 });
 
 
@@ -171,8 +162,17 @@ db.all("SELECT UserID,Name,Email FROM user WHERE UserID=13", [], (err, rows) => 
         res.status(200).json({ valid: true, rows: rows });
     });
   });
-    // Bildinformationen in die SQLite-Datenbank schreiben
-  
+
+  app.post(['/Konzerte/:id/get','/Festivals/:id/get'], (req, res) => {
+    const id = req.params.id;
+    console.log(id);
+    db.all('SELECT * FROM Veranstaltung where VID = ?',id,(err,rows) => {
+      if (err) {
+        throw err;
+      }
+        res.status(200).json({ valid: true, rows: rows[0],id:'veranstaltung' });
+    });
+  });
   
   // Server starten
   app.listen(port, () => {
