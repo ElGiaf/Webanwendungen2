@@ -1,5 +1,3 @@
-//https://www.youtube.com/watch?v=uOE1aqyzq_w
-
 const express = require('express');
 const http = require('http');
 const fs = require('fs');
@@ -8,16 +6,18 @@ const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const bodyParser = require('body-parser');
 const { get } = require('https');
-//const fileupload = require('express-fileupload');
+
 let db = new sqlite3.Database('./DB/data.db');
 const app = express();
 const port = 8080;
+
 const storage = multer.diskStorage({
     destination: "./public/Bilder/",
     filename: function (request, file, callback) {
       callback(null, Date.now() + "-" + file.originalname);
     },
   });
+
 const upload = multer({ storage: storage });
 
 let reptrue = {valid:true};
@@ -26,25 +26,34 @@ let repfalse  = {valid:false}
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-//app.use(fileupload());
 
-// Definiere eine Route für die Startseite
+// Definiere Route für Seiten
+app.get(['/','/Kuenstler','/Konto','/Einstellungen'], (req, res) => {
+  // Sende die HTML-Datei als Antwort auf die Anfrage
+  res.sendFile(path.join(__dirname, 'public', 'Main.html'));
+});
+app.get(['/Festivals','/Konzerte'], (req, res) => {
+  // Sende die HTML-Datei als Antwort auf die Anfrage
+  res.sendFile(path.join(__dirname, 'public', 'Veranstaltung.html'));
+});
 app.get('/data', (req, res) => {
   // Sende die HTML-Datei als Antwort auf die Anfrage
   res.sendFile(path.join(__dirname, 'public', 'DataDump.html'));
-  
 });
-app.get('/Festivals', (req, res) => {
+app.get(['/Konzerte/:id','/Festivals/:id'], (req, res) => {
+  const id = req.params.id;
+  console.log(id);
+  db.all('SELECT * FROM Veranstaltung where VID = ?',id,(err,rows) => {
+    if (err) {
+      throw err;
+    }
+      console.log(rows[0])
+  });
   // Sende die HTML-Datei als Antwort auf die Anfrage
-  res.sendFile(path.join(__dirname, 'public', 'Veranstaltung.html'));
-  
+  res.sendFile(path.join(__dirname, 'public', 'Main.html'));
 });
-app.get('/Konzerte', (req, res) => {
-  // Sende die HTML-Datei als Antwort auf die Anfrage
-  res.sendFile(path.join(__dirname, 'public', 'Veranstaltung.html'));
-  
-});
-  
+
+
 function getID(query){
   db.get(query, (err, row) => {
     if (err) {
@@ -62,35 +71,6 @@ function getID(query){
   });
 }
 
-
-app.post("/upload/test", upload.fields([
-  { name: "img", maxCount: 1 }
-]), (req, res) => {
-  const image = req.files["img"][0].filename;
-  const query = "SELECT MAX(id) AS count FROM test";
-    const id = getID(query);
-  const sql = "INSERT INTO test (id, img) VALUES (?, ?)";
-  const values = [id, image];
-
-  db.run(sql, values, err => {
-    if (err) {
-      console.error(err);
-      res.status(500).json({ valid: false, message: "Error inserting data into database" });
-    } else {
-      db.all('Select img from test where id = ?',[id],(err,rows) => {
-        if (err) {
-          throw err;
-        }
-        rows.forEach((row) => {
-          const img = row.img;
-          console.log(img);
-          res.status(200).json({ valid: true, message: "Data successfully inserted into database",img:img });
-        });
-      })
-      
-    }
-  });
-});
 
 /*db.all("SELECT UserID,Name,Email FROM user WHERE UserID=1 ", [], (err, rows) => {
   if (err) {
@@ -156,8 +136,6 @@ db.all("SELECT UserID,Name,Email FROM user WHERE UserID=13", [], (err, rows) => 
       sql = "INSERT INTO Veranstaltung (VID,name, Logo, Bilder, startDate, endDate, InfoText) VALUES (?, ?, ?, ?, ?, ?, ?)";
       values = [id,name, logo, bilder, start, ende, text];
     }
-    
-  
     db.run(sql, values, err => {
       if (err) {
         console.error(err);
@@ -173,7 +151,6 @@ db.all("SELECT UserID,Name,Email FROM user WHERE UserID=13", [], (err, rows) => 
     const name = req.body.name;
     const von = req.body.von;
     const bis = req.body.bis;
-    console.log('name: ',name ,von, bis);
       db.all('SELECT * FROM Veranstaltung where name like ? and startDate >= ? and endDate <= ? and endDate is not null',['%'+name+'%',von, bis],(err,rows) => {
       if (err) {
         throw err;
