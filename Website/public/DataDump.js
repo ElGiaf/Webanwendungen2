@@ -12,13 +12,13 @@ function init(){
     userin = document.getElementById('user');
     veranstaltungin = document.getElementById('Veranstaltung');
     Künstlerin = document.getElementById('Künstler');
-    Preisein = document.getElementById('Preise');
-    Auftrittin = document.getElementById('Auftritt');
+    /*Preisein = document.getElementById('Preise');
+    Auftrittin = document.getElementById('Auftritt');*/
     userin.addEventListener('submit',(event) => {user(event)});
     veranstaltungin.addEventListener('submit', (event) => {Veranstaltung(event)});
     Künstlerin.addEventListener('submit',(event) => {Künstler(event)});
-    Preisein.addEventListener('submit',(event) => {Preise(event)});
-    Auftrittin.addEventListener('submit',(event) => {Auftritt(event)});
+    /*Preisein.addEventListener('submit',(event) => {Preise(event)});
+    Auftrittin.addEventListener('submit',(event) => {Auftritt(event)});*/
 }
 
   function makeRequest(request) {
