@@ -7,6 +7,7 @@ function init(){
 }
 
 function getPage(){
+    const data = {'valid': true}
     const request = new Request(url+'/get', {
         body: JSON.stringify(data),
         method: "POST",
@@ -17,6 +18,7 @@ function getPage(){
     makeRequest(request)
         .then(res => {
           if(res.id == 'veranstaltung'){
+            const rows= res.rows;
             const id = rows[0].VID;
             const name = rows[0].name;
             const logo = rows[0].Logo;
