@@ -37,6 +37,8 @@ function getPage(){
           if(res.id == 'main'){
             var container = document.getElementById('container');
             container.innerHTML='';
+            var js = document.getElementsByTagName('Head');
+            js.appendChild(document.createElement('<script src="logo.js"></script>'))
             res.rows.forEach((row) => {
               const id = row.VID;
               const name = row.name;

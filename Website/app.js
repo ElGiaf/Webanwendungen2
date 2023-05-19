@@ -90,7 +90,7 @@ db.all("SELECT UserID,Name,Email FROM user WHERE UserID=13", [], (err, rows) => 
  
 
   
-  app.post("/upload/user", (request, response) => {
+  app.post("/data/user", (request, response) => {
     console.log(request.body);
     const name = request.body.userName;
     const email = request.body.userEmail;
@@ -110,7 +110,7 @@ db.all("SELECT UserID,Name,Email FROM user WHERE UserID=13", [], (err, rows) => 
   );
 
 
-  app.post("/upload/veranstaltung", upload.fields([
+  app.post("/data/veranstaltung", upload.fields([
     { name: "logo", maxCount: 1 },
     { name: "Bilder"}
   ]), (req, res, next) => {

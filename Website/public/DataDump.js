@@ -5,18 +5,19 @@ let veranstaltungin;
 let Künstlerin;
 let Preisein;
 let Auftrittin;
-let url = "http://localhost:8080/upload/";
+let url;
 
 
 function init(){
+    url = window.location.href;
     userin = document.getElementById('user');
     veranstaltungin = document.getElementById('Veranstaltung');
-    Künstlerin = document.getElementById('Künstler');
+   // Künstlerin = document.getElementById('Künstler');
     /*Preisein = document.getElementById('Preise');
     Auftrittin = document.getElementById('Auftritt');*/
     userin.addEventListener('submit',(event) => {user(event)});
     veranstaltungin.addEventListener('submit', (event) => {Veranstaltung(event)});
-    Künstlerin.addEventListener('submit',(event) => {Künstler(event)});
+    //Künstlerin.addEventListener('submit',(event) => {Künstler(event)});
     /*Preisein.addEventListener('submit',(event) => {Preise(event)});
     Auftrittin.addEventListener('submit',(event) => {Auftritt(event)});*/
 }
@@ -46,7 +47,7 @@ function user(event){
     const passwort = formData.get('userPasswort');
     console.log(name,email,passwort);
     const data = [name,email,passwort]
-    const request = new Request(url+'user', {
+    const request = new Request(url+'/user', {
       body: formData,
       method: "POST",
     });
@@ -80,7 +81,7 @@ function Veranstaltung(event){
     formData.append('start',document.getElementsByName('VStart')[0].value);
     formData.append('ende',document.getElementsByName('VEnde')[0].value);
     formData.append('text',document.getElementsByName('VText')[0].value);
-    const request = new Request(url+'veranstaltung', {
+    const request = new Request(url+'/veranstaltung', {
         body: formData,
         method: "POST",
     });
@@ -106,7 +107,7 @@ function Künstler(event){
     formData.append('kText',document.getElementsByName('KünstlerKurzText')[0].value);
     formData.append('bilder',document.getElementsByName('KünstlerBilder')[0].files[0]);
     formData.append('lText',document.getElementsByName('KünstlerLangText')[0].value);
-    const request = new Request(url+'user', {
+    const request = new Request(url+'Kenstler', {
         body: formData,
         method: "POST",
     });
@@ -132,7 +133,7 @@ function Preise(event){
     formData.append('preis',document.getElementsByName('preis')[0].value);
     formData.append('anzahl',document.getElementsByName('anzahl')[0].value);
     formData.append('vstart',document.getElementsByName('vstart')[0].value);
-    const request = new Request(url+'user', {
+    const request = new Request(url+'Preise', {
         body: formData,
         method: "POST",
     });
@@ -155,7 +156,7 @@ function Auftritt(event){
     const formData = new FormData();
     formData.append('veranstaltung',document.getElementsByName('Vernasteltung')[0].value);
     formData.append('Kuenstler',document.getElementsByName('Künstler')[0].value);
-    const request = new Request(url+'user', {
+    const request = new Request(url+'Auftrit', {
         body: formData,
         method: "POST",
     });
@@ -178,7 +179,7 @@ function Merken(event){
     const formData = new FormData();
     formData.append('veranstaltung',document.getElementsByName('Vernasteltung')[0].value);
     formData.append('veranstaltung',document.getElementsByName('User')[0].value);
-    const request = new Request(url+'user', {
+    const request = new Request(url+'Merken', {
         body: formData,
         method: "POST",
     });
