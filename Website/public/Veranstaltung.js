@@ -47,12 +47,17 @@ function getVeranstaltung(name, von, bis) {
             const logo = row.Logo;
             const Bilder = row.Bilder;
             const start = row.startDate;
-            const ende = row.endDate;
+            let ende = row.endDate;
             const text = row.InfoText;
+            if(ende== null){
+              ende = '';
+            }else{
+              ende = ', '+ende
+            }
             console.log(id,name,start,ende);
             var container = document.getElementById('container');
             var paragraph = document.createElement('dl');
-            paragraph.innerHTML = "<dt><a href=\""+url+"/"+id+"\"><img src=\"Bilder/"+logo+"\" alt=\"\" class=\"festivals\"></a></dt><dd><h3>"+name+"</h3><h4>"+start+", "+ende+"</h4><p>"+text+"</p></dd>";
+            paragraph.innerHTML = "<dt><a href=\""+url+"/"+id+"\"><img src=\"Bilder/"+logo+"\" alt=\"\" class=\"Vlogo\"></a></dt><dd><h3>"+name+"</h3><h4>"+start+ende+"</h4></dd>";
             container.appendChild(paragraph);
           });
         }else{
