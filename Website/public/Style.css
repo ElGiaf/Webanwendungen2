@@ -139,9 +139,17 @@ dd::after {
     right:5em;
 }
 
-.fest{
+.Vlogo{
     float:left;
     margin-right: 25px;
+    width: 20em;
+    height: 20em;
+    object-fit: contain;
+    
+}
+.vtext{
+    float: right;
+    display:block;
 }
 
 .Zeitraum{
@@ -156,6 +164,8 @@ dd::after {
 
 
 .bilderreihe{
+    float: right;
+    width: 30em;
     margin-left: 10em;
     padding-bottom: 1em;
 }

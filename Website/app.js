@@ -7,6 +7,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const { get } = require('https');
 
+
 let db = new sqlite3.Database('./DB/data.db');
 const app = express();
 const port = 8080;
@@ -26,6 +27,7 @@ let repfalse  = {valid:false}
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.set('view engine', 'ejs');
 
 // Definiere Route für Seiten
 app.get(['/','/Kuenstler','/Konto','/Einstellungen'], (req, res) => {
@@ -170,7 +172,7 @@ db.all("SELECT UserID,Name,Email FROM user WHERE UserID=13", [], (err, rows) => 
       if (err) {
         throw err;
       }
-        res.status(200).json({ valid: true, rows: rows[0],id:'veranstaltung' });
+        res.status(200).json({ valid: true, rows: rows,id:'veranstaltung' });
     });
   });
   
