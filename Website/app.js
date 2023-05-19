@@ -42,7 +42,7 @@ app.get('/data', (req, res) => {
   // Sende die HTML-Datei als Antwort auf die Anfrage
   res.sendFile(path.join(__dirname, 'public', 'DataDump.html'));
 });
-app.get(['/Konzerte/:id','/Festivals/:id'], (req, res) => {
+app.get(['/Konzerte/:id','/Festivals/:id','/:id'], (req, res) => {
   res.sendFile(path.join(__dirname, 'public', '/Main.html'));
 });
 
@@ -112,7 +112,7 @@ db.all("SELECT UserID,Name,Email FROM user WHERE UserID=13", [], (err, rows) => 
 
   app.post("/upload/veranstaltung", upload.fields([
     { name: "logo", maxCount: 1 },
-    { name: "Bilder", maxCount: 1 }
+    { name: "Bilder"}
   ]), (req, res, next) => {
     const { name, start, ende, text } = req.body;
     console.log(name,start,ende,text);
@@ -144,7 +144,7 @@ db.all("SELECT UserID,Name,Email FROM user WHERE UserID=13", [], (err, rows) => 
     const name = req.body.name;
     const von = req.body.von;
     const bis = req.body.bis;
-      db.all('SELECT * FROM Veranstaltung where name like ? and startDate >= ? and endDate <= ? and endDate is not null',['%'+name+'%',von, bis],(err,rows) => {
+      db.all('SELECT * FROM Veranstaltung where name like ? and startDate >= ? and endDate <= ? and endDate is not null order by startDate',['%'+name+'%',von, bis],(err,rows) => {
       if (err) {
         throw err;
       }
@@ -153,11 +153,10 @@ db.all("SELECT UserID,Name,Email FROM user WHERE UserID=13", [], (err, rows) => 
   });
 
   app.post('/Konzerte/get', (req, res) => {
-    // extract data from request body
     const name = req.body.name;
     const von = req.body.von;
     console.log('name: ',name ,von);
-      db.all('SELECT * FROM Veranstaltung where name like ? and startDate >= ? and endDate is null',['%'+name+'%',von],(err,rows) => {
+      db.all('SELECT * FROM Veranstaltung where name like ? and startDate >= ? and endDate is null order by startDate',['%'+name+'%',von],(err,rows) => {
       if (err) {
         throw err;
       }
@@ -165,7 +164,17 @@ db.all("SELECT UserID,Name,Email FROM user WHERE UserID=13", [], (err, rows) => 
     });
   });
 
-  app.post(['/Konzerte/:id/get','/Festivals/:id/get'], (req, res) => {
+  app.post(['/',''],(req, res) => {
+    const name = req.body.search;
+      db.all('SELECT * FROM Veranstaltung where name like ? and startDate >= ? order by startDate',['%'+name+'%',Date.now()],(err,rows) => {
+      if (err) {
+        throw err;
+      }
+        res.status(200).json({ valid: true, rows: rows, id:'main' });
+    });
+  });
+
+  app.post(['/Konzerte/:id','/Festivals/:id','/:id'], (req, res) => {
     const id = req.params.id;
     console.log(id);
     db.all('SELECT * FROM Veranstaltung where VID = ?',id,(err,rows) => {

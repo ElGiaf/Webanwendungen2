@@ -10,9 +10,9 @@
 <body>
 	<!-- HTML-Struktur für Titel und Konto-Verweis -->
 	<header id="head">
-		<a href="Einstellungen.html"><img src="Bilder/setingsIcon.png" alt="" class="Konto"></a>
-		<a href="Konto.html"><img src="Bilder/UserIcon.png" alt="" class="Konto"></a>
-		<a href="Main.html"><img src="Bilder/Logo.png" alt="Wo Musik" id="Logo"></a>
+		<a href="/data"><img src="Bilder/setingsIcon.png" alt="" class="Konto"></a>
+		<a href="/Konto"><img src="Bilder/UserIcon.png" alt="" class="Konto"></a>
+		<a href="/"><img src="Bilder/Logo.png" alt="Wo Musik" id="Logo"></a>
 		<nav>
 			<ul>
 				<li><a href="/Festivals">Festivals</a></li>
@@ -40,6 +40,13 @@
 			width: 70%;
 			height: 6em;
 		}
+		label {
+    clear: both;
+    display: block;
+    float: left;
+    font-weight: bold;
+    text-align: left;
+}
 	</style>
 	<!-- HTML-Struktur für den Hauptinhalt -->
 	<main>
@@ -54,14 +61,18 @@
 		<form id="Veranstaltung">
 			<label>Veranstaltung
 			<input type="text" name="VName" placeholder="name" required>
+			<label for="VLogo">Logo</label>
 			<input type="file" name="VLogo" placeholder="Logo" required>
-			<input type="file" name="VBilder" placeholder="Bilder" required>
+			<label for="VBilder">Bilder</label>
+			<input type="file" name="VBilder" placeholder="Bilder"multiple required>
+			<label for="VStart">Von</label>
 			<input type="date" name="VStart" placeholder="Start" required>
+			<label for="VEnde">Bis (nicht wenn Konzert)</label>
 			<input type="date" name="VEnde" placeholder="Ende">
-			<textarea type="text" name="VText" placeholder="Text" required></textarea>
+			<textarea type="text" name="VText" placeholder="Beschreibungstext" required></textarea>
 			<Button type="submit">Absenden</Button></label>
 		</form>
-		<form id="Künstler">
+		<!-- <form id="Künstler">
 			<label>Künstler
 			<input type="text" id="KünstlerName" name="KünstlerName" placeholder="name" required>
 			<input type="file" name="KünstlerBild" placeholder="Bild" required>
@@ -90,7 +101,7 @@
 			<input type="number" name="User" placeholder="User" required>
 			<input type="number" name="Vernasteltung" placeholder="Vernasteltung" required>
 			<Button type="submit">Absenden</Button></label>
-		</form>
+		</form> -->
 	</main>
 </body>
 </html>

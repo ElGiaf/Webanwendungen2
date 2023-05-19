@@ -103,7 +103,7 @@ input{
 }
 dl{
 	margin-top:15px;
-    
+    height: max-content;
 }
 
 dt {
