@@ -37,8 +37,8 @@ function getPage(){
           if(res.id == 'main'){
             var container = document.getElementById('container');
             container.innerHTML='';
-            var js = document.getElementsByTagName('Head');
-            js.appendChild(document.createElement('<script src="logo.js"></script>'))
+            //var js = document.getElementsByTagName('Head');
+            //js.appendChild(document.createElement('<script src="logo.js"></script>'))
             res.rows.forEach((row) => {
               const id = row.VID;
               const name = row.name;
@@ -55,6 +55,36 @@ function getPage(){
               console.log('hallowelt',id,name,start,ende);
               var paragraph = document.createElement('dl');
               paragraph.innerHTML = "<dt><a href=\""+url+id+"\"><img src=\"Bilder/"+logo+"\" alt=\"\" class=\"Vlogo\"></a></dt><dd><h3>"+name+"</h3><h4>"+start+ende+"</h4></dd>";
+              container.appendChild(paragraph);
+            });
+          }
+          if(res.id == 'Kuenstlerall'){
+            var container = document.getElementById('container');
+            container.innerHTML = '';
+            res.rows.forEach((row) => {
+              var id = row.KID;
+              var name = row.Name;
+              var bild = row.Bild;
+              var kurzText = row.kurzText;
+              var bilderreihe = row.bilderreihe;
+              var langText = row.langText;
+              var paragraph = document.createElement('details');
+              paragraph.innerHTML = "<summary><h1>"+name+"</h1><img src=\"Bilder/"+bild+"\" alt=\"\"></summary><p>"+kurzText+"<br><a href=\""+url+"/"+id+"\"><button>Zum Künstler</button></a></p>";
+              container.appendChild(paragraph);
+            });
+          }
+          if(res.id == 'Kuenstler'){
+            var container = document.getElementById('container');
+            container.innerHTML = '';
+            res.rows.forEach((row) => {
+              var id = row.KID;
+              var name = row.Name;
+              var bild = row.Bild;
+              var kurzText = row.kurzText;
+              var bilderreihe = row.bilderreihe;
+              var langText = row.langText;
+              var paragraph = document.createElement('div');
+              paragraph.innerHTML = "<img src=\"Bilder/"+bild+"\" alt=\"\" class=\"Vlogo\"><h2>"+name+"</h2><a href=\"javascript:history.back()\">zurück</a><img src=\"Bilder/"+bilderreihe+"\" alt=\"\" class=\"bilderreihe\"><p>"+langText+"</p>";
               container.appendChild(paragraph);
             });
           }

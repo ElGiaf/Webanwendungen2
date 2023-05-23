@@ -12,12 +12,12 @@ function init(){
     url = window.location.href;
     userin = document.getElementById('user');
     veranstaltungin = document.getElementById('Veranstaltung');
-   // Künstlerin = document.getElementById('Künstler');
+    Künstlerin = document.getElementById('Künstler');
     /*Preisein = document.getElementById('Preise');
     Auftrittin = document.getElementById('Auftritt');*/
     userin.addEventListener('submit',(event) => {user(event)});
     veranstaltungin.addEventListener('submit', (event) => {Veranstaltung(event)});
-    //Künstlerin.addEventListener('submit',(event) => {Künstler(event)});
+    Künstlerin.addEventListener('submit',(event) => {Künstler(event)});
     /*Preisein.addEventListener('submit',(event) => {Preise(event)});
     Auftrittin.addEventListener('submit',(event) => {Auftritt(event)});*/
 }
@@ -53,12 +53,12 @@ function user(event){
     });
     makeRequest(request)
       .then(res => {
-        if(res){
+        if(res.valid){
             document.getElementById('userEmail').style.backgroundColor = '';
             userin.reset();
         console.log('reset');
         }else{
-            if(!res){
+            if(!res.valid){
                 document.getElementById('userEmail').style.backgroundColor = "red";
                 console.log('email falsch');
             }else{
@@ -87,7 +87,7 @@ function Veranstaltung(event){
     });
     makeRequest(request)
       .then(res => {
-        if(res){
+        if(res.valid){
             veranstaltungin.reset();
         console.log('reset');
         }else{
@@ -102,18 +102,19 @@ function Veranstaltung(event){
 function Künstler(event){
     event.preventDefault();
     const formData = new FormData();
-    formData.append('name',document.getElementsByName('KünstlerName')[0].value);
-    formData.append('bild',document.getElementsByName('KünstlerBild')[0].files[0]);
-    formData.append('kText',document.getElementsByName('KünstlerKurzText')[0].value);
-    formData.append('bilder',document.getElementsByName('KünstlerBilder')[0].files[0]);
-    formData.append('lText',document.getElementsByName('KünstlerLangText')[0].value);
-    const request = new Request(url+'Kenstler', {
+    formData.append('name',document.getElementsByName('KName')[0].value);
+    formData.append('bild',document.getElementsByName('KBild')[0].files[0]);
+    formData.append('kText',document.getElementsByName('KKText')[0].value);
+    formData.append('bilder',document.getElementsByName('KBilder')[0].files[0]);
+    formData.append('lText',document.getElementsByName('KLText')[0].value);
+    console.log(formData.name,formData.bild,formData.kText,formData.lText);
+    const request = new Request(url+'/Kuenstler', {
         body: formData,
         method: "POST",
     });
     makeRequest(request)
       .then(res => {
-        if(res){
+        if(res.valid){
             Künstlerin.reset();
         console.log('reset');
         }else{

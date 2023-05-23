@@ -46,6 +46,7 @@ header a{
 }
 a:hover{
     filter: brightness(.75);
+    cursor: pointer;
 }
 a {
     color: #fff;
@@ -237,13 +238,24 @@ button{
 button.tempButton{
     background-color: #ff0000c7;
 } 
+summary :hover{
+    cursor: pointer;
+}
 summary{
-    float: right;
-    margin-right: 25vw;
+    display: flex;
+    justify-content: center;
+}
+summary h1{
+    top: 50%;
+    font-family:Delicious_Handrawn;
+    font-weight: 100;
+    float: left; 
 }
 summary img{
-    width: 25vw;
-    height: 25vw;
+    border-radius: 4em;
+    margin-left: 2em;
+    width: 15em;
+    height: 15em;
     object-fit:cover;
 }
 details p{

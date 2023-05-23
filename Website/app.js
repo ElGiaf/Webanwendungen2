@@ -42,7 +42,7 @@ app.get('/data', (req, res) => {
   // Sende die HTML-Datei als Antwort auf die Anfrage
   res.sendFile(path.join(__dirname, 'public', 'DataDump.html'));
 });
-app.get(['/Konzerte/:id','/Festivals/:id','/:id'], (req, res) => {
+app.get(['/Konzerte/:id','/Festivals/:id','/:id','/Kuenstler/:id'], (req, res) => {
   res.sendFile(path.join(__dirname, 'public', '/Main.html'));
 });
 
@@ -132,13 +132,38 @@ db.all("SELECT UserID,Name,Email FROM user WHERE UserID=13", [], (err, rows) => 
     db.run(sql, values, err => {
       if (err) {
         console.error(err);
-        res.status(500).json({ success: false, message: "Error inserting data into database" });
+        res.status(500).json(repfalse);
       } else {
-        res.status(200).json({ success: true, message: "Data successfully inserted into database" });
+        res.status(200).json(reptrue);
       }
     });
   });
   
+  app.post("/data/Kuenstler", upload.fields([
+    { name: "bild", maxCount: 1 },
+    { name: "bilder"}
+  ]), (req, res, next) => {
+    console.log('in');
+    const { name, kText, lText } = req.body;
+    console.log(name,kText,lText);
+    const logo = req.files["bild"][0].filename;
+    const bilder = req.files["bilder"][0].filename;
+    const query = "SELECT MAX(KID) AS count FROM Künstler";
+    const id = getID(query);
+    let sql;
+    let values;
+      sql = "INSERT INTO Künstler (KID, name, Bild, kurzText, bilderreihe, langText) VALUES (?, ?, ?, ?, ?, ?)";
+      values = [id,name, logo, kText, bilder, lText];
+    db.run(sql, values, err => {
+      if (err) {
+        console.error(err);
+        res.status(500).json(repfalse);
+      } else {
+        res.status(200).json(reptrue);
+      }
+    });
+  });
+
   app.post('/Festivals/get', (req, res) => {
     // extract data from request body
     const name = req.body.name;
@@ -174,6 +199,18 @@ db.all("SELECT UserID,Name,Email FROM user WHERE UserID=13", [], (err, rows) => 
     });
   });
 
+  app.post(['/Kuenstler','/Kuenstler/'], (req, res) => {
+    const name = req.body.search;
+    console.log('name: ',name);
+      db.all('SELECT * FROM Künstler where Name like ?',['%'+name+'%'],(err,rows) => {
+      if (err) {
+        throw err;
+      }
+        console.log(rows);
+        res.status(200).json({ valid: true, rows: rows, id: 'Kuenstlerall' });
+    });
+  });
+
   app.post(['/Konzerte/:id','/Festivals/:id','/:id'], (req, res) => {
     const id = req.params.id;
     console.log(id);
@@ -182,6 +219,17 @@ db.all("SELECT UserID,Name,Email FROM user WHERE UserID=13", [], (err, rows) => 
         throw err;
       }
         res.status(200).json({ valid: true, rows: rows,id:'veranstaltung' });
+    });
+  });
+
+  app.post(['/Kuenstler/:id'], (req, res) => {
+    const id = req.params.id;
+    console.log(id);
+    db.all('SELECT * FROM Künstler where KID = ?',id,(err,rows) => {
+      if (err) {
+        throw err;
+      }
+        res.status(200).json({ valid: true, rows: rows,id:'Kuenstler' });
     });
   });
   
