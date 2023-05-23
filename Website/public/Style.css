@@ -84,10 +84,10 @@ li a {
     padding: 14px 16px;
     text-decoration: none;
 }
+
 input{
     float: left;
-    padding: .5em;
-    height: 1em;
+    height: 2em;
     width: 50%;
     font-size: 1.5em;
     border: #fff solid 3px ;
@@ -186,7 +186,7 @@ main {
 
 p{
     height: 1.5em;
-    
+    display: grid;
 }
 
 .maintext{

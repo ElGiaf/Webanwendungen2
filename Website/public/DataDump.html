@@ -19,49 +19,64 @@
 				<li><a href="/Konzerte">Konzerte</a></li>
 				<li><a href="/Kuenstler">Künstler</a></li>
 			</ul>
-			<input type="text" placeholder="Suche">
+			<input type="search" placeholder="Suche">
 		</nav>
 	</header>
 	<!-- HTML-Struktur für die Navigationsleiste -->
 	<style>
+		main{
+			display: grid;
+		}
 		form{
 
 			margin: 20px;
-			position: relative;
-			display: flex;
+			display: block;
 			padding:  20px;
 			background-color: #0000002c;
 			border: rgba(255, 255, 255, 0.644) solid 5px;
 			border-radius: 2em;
+			width: 90%;
+			
 		}
 		input{
-			position: relative;
+
+			float: left;
+			display: block;
 			margin: 20px;
 		}
 		textarea{
-			width: 70%;
+			width: 100%;
 			height: 6em;
 		}
 		label {
-    clear: both;
-    display: block;
-    float: left;
-    font-weight: bold;
-    text-align: left;
-}
+			clear: both;
+			float: left;
+			font-weight: bold;
+			text-align: left;
+		}
+		select{
+			background-color: #ffffff5f;
+			border: #fff solid 3px ;
+   			border-radius: 1.5em;
+			width: 100%;
+			height: 2em;
+		}
 	</style>
 	<!-- HTML-Struktur für den Hauptinhalt -->
 	<main>
 		<form id="user">
-			<label>user
+			<h1>User</h1> 
+			<label for="userName">Name</label>
 			<input type="text"  name="userName" placeholder="Name" required>
+			<label for="userEmail">Email</label>
 			<input type="email" id="userEmail"  name="userEmail" placeholder="Email" required>
+			<label for="userPasswort">Passwort</label>
 			<input type="password"  name="userPasswort" placeholder="Passwort" required>
 			<Button type="submit">Absenden</Button>
-			</label>
 		</form>
 		<form id="Veranstaltung">
-			<label>Veranstaltung
+			<h1>Veranstaltung</h1> 
+			<label for="VName">Name</label>
 			<input type="text" name="VName" placeholder="name" required>
 			<label for="VLogo">Logo</label>
 			<input type="file" name="VLogo" placeholder="Logo" required>
@@ -72,32 +87,38 @@
 			<label for="VEnde">Bis (nicht wenn Konzert)</label>
 			<input type="date" name="VEnde" placeholder="Ende">
 			<textarea type="text" name="VText" placeholder="Beschreibungstext" required></textarea>
-			<Button type="submit">Absenden</Button></label>
+			<Button type="submit">Absenden</Button>
 		</form>
 		<form id="Künstler">
-			<label>Künstler
+			<h1>Künstler</h1> 
 			<input type="text" name="KName" placeholder="name" required>
 			<input type="file" name="KBild" placeholder="Bild" required>
 			<textarea type="text" name="KKText" placeholder="kurz Text" required></textarea>
 			<input type="file" name="KBilder" placeholder="Bilderreihe" multiple required>
 			<textarea type="text" name="KLText" placeholder="lang Text"></textarea>
-			<Button type="submit">Absenden</Button></label>
+			<Button type="submit">Absenden</Button>
 		</form>
 		<form id="Preise">
-			<label>	Preise
+			<h1>Preise</h1>	
 			<input type="number" name="Vernasteltung" placeholder="Vernasteltung" required> 
 			<input type="text" name="klasse" placeholder="Name" required>
 			<input type="number" name="preis" placeholder="Preis" required>
 			<input type="number" name="anzahl" placeholder="Anzahl" required>
 			<input type="date" name="vstart" placeholder="vstart" required>
-			<Button type="submit">Absenden</Button></label>
+			<Button type="submit">Absenden</Button>
 		</form>
-		<form id="Auftritt">
+		
+		<form name="Auftritt" id="Auftritt">
 			<!-- https://www.php-einfach.de/2020/11/interaktives-dropdown-inklusive-serverseitige-suche/ -->
-			<label>	Auftritt
-			<input type="number" name="Künstler" placeholder="Künstler" required>
-			<input type="number" name="Vernasteltung" placeholder="Vernasteltung" required>
-			<Button type="submit">Absenden</Button></label>
+			<h1>Auftritt</h1>	
+			<label for="Kuenstler">Künstler</label>
+			<input type="search">
+			<select name="Kuenstler" id="AuftritKuenstler">
+				<option value=""></option>
+			</select>
+			<label for="Veranstaltung">Veranstaltung</label>
+			<select name="Veranstaltung" id="AuftritVeranstaltung"></select>
+			<Button type="submit">Absenden</Button>
 		</form>
 		<!-- <form id="Merken">
 			<label>	Merken
