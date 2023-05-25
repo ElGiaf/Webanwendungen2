@@ -5,6 +5,8 @@ let veranstaltungin;
 let Künstlerin;
 let Preisein;
 let Auftrittin;
+let sucheKuenstler;
+let sucheVeranastaltung;
 let url;
 
 
@@ -13,13 +15,17 @@ function init(){
     userin = document.getElementById('user');
     veranstaltungin = document.getElementById('Veranstaltung');
     Künstlerin = document.getElementById('Künstler');
-    /*Preisein = document.getElementById('Preise');
-    Auftrittin = document.getElementById('Auftritt');*/
+    /*Preisein = document.getElementById('Preise');*/
+    Auftrittin = document.getElementById('Auftritt');
+    sucheKuenstler = document.getElementById('sucheAuftritK');
+    sucheVeranastaltung= document.getElementById('sucheAuftritV');
     userin.addEventListener('submit',(event) => {user(event)});
     veranstaltungin.addEventListener('submit', (event) => {Veranstaltung(event)});
     Künstlerin.addEventListener('submit',(event) => {Künstler(event)});
-    /*Preisein.addEventListener('submit',(event) => {Preise(event)});
-    Auftrittin.addEventListener('submit',(event) => {Auftritt(event)});*/
+    /*Preisein.addEventListener('submit',(event) => {Preise(event)});*/
+    Auftrittin.addEventListener('submit',(event) => {Auftritt(event)});
+    sucheKuenstler.addEventListener('input',(event)=>{sucheKuenstlerFunk(event)});
+    sucheVeranastaltung.addEventListener('input',(event)=>{sucheVeranastaltungFunk(event)})
 }
 
   function makeRequest(request) {
@@ -180,7 +186,7 @@ function Merken(event){
     const formData = new FormData();
     formData.append('veranstaltung',document.getElementsByName('Vernasteltung')[0].value);
     formData.append('veranstaltung',document.getElementsByName('User')[0].value);
-    const request = new Request(url+'Merken', {
+    const request = new Request(url+'/Merken', {
         body: formData,
         method: "POST",
     });
@@ -196,4 +202,26 @@ function Merken(event){
       .catch(error => {
         console.log(error);
       });
+  }
+
+  function sucheKuenstlerFunk(event){
+    let name = sucheKuenstler.value;
+    console.log(name);
+    const request = new Request(url+'/getKuenstler',{
+      body: {name: name},
+      method: 'POST',
+    });
+    makeRequest(request)
+      .then(res =>{
+        if (res.valid) {
+          res.rows.forEach(row => {
+            const id = row.KID;
+            const name = row.name;
+            console.log(id, name);
+            const paragraph = document.createElement('option');
+          paragraph.innerHTML('<p name=\''+id+'\'>'+name+'</p>');
+            document.getElementById('AuftritKuenstler').appendChild(paragraph);
+          });
+        }
+      })
   }

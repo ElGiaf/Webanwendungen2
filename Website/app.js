@@ -199,7 +199,7 @@ db.all("SELECT UserID,Name,Email FROM user WHERE UserID=13", [], (err, rows) => 
     });
   });
 
-  app.post(['/Kuenstler','/Kuenstler/'], (req, res) => {
+  app.post(['/Kuenstler','/Kuenstler/','/data/getKuenstler'], (req, res) => {
     const name = req.body.search;
     console.log('name: ',name);
       db.all('SELECT * FROM Künstler where Name like ?',['%'+name+'%'],(err,rows) => {
