@@ -64,32 +64,6 @@ function getID(query){
   });
 }
 
-
-/*db.all("SELECT UserID,Name,Email FROM user WHERE UserID=1 ", [], (err, rows) => {
-  if (err) {
-    console.log("error");
-  }
-  rows.forEach((row) => {
-    var a=row.UserID+row.Name+row.Email;
-    console.log(a +"neuuuu");
-    process.getElementById("DBTest").innerText=a;
-  });
-});  
-
-//Standard abfrage für die datenbank mit ausgabe auf der Konsole (SQL befehl wie gelernt eintragen)
-db.all("SELECT UserID,Name,Email FROM user WHERE UserID=13", [], (err, rows) => {
-  if (err) {
-    console.log("error");
-  }
-  rows.forEach((row) => { 
-    console.log(row.Name,row.Email);
-  }
-  );
-});
-*/
- 
-
-  
   app.post("/data/user", (request, response) => {
     console.log(request.body);
     const name = request.body.userName;
@@ -191,7 +165,7 @@ db.all("SELECT UserID,Name,Email FROM user WHERE UserID=13", [], (err, rows) => 
 
   app.post(['/',''],(req, res) => {
     const name = req.body.search;
-      db.all('SELECT * FROM Veranstaltung where name like ? and startDate >= ? order by startDate',['%'+name+'%', Date(Date.now())],(err,rows) => {
+      db.all('SELECT * FROM Veranstaltung where name like ? and startDate >= ? order by startDate',['%'+name+'%', Date.now()],(err,rows) => {
       if (err) {
         throw err;
       }
