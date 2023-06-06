@@ -129,7 +129,7 @@ dd::after {
     display: block;
     margin-top:15px;
   }
-
+  
 #erinnerung{
     text-align: center;
     /*padding: 10px;
@@ -242,10 +242,12 @@ summary :hover{
     cursor: pointer;
 }
 summary{
+    margin-top: 1em;
     display: flex;
     justify-content: center;
 }
 summary h1{
+    margin: auto 0 auto 0;
     top: 50%;
     font-family:Delicious_Handrawn;
     font-weight: 100;

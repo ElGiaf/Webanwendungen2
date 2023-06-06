@@ -27,6 +27,7 @@ function init(){
     sucheKuenstler.addEventListener('input',(event)=>{sucheKuenstlerFunk(event)});
     sucheVeranastaltung.addEventListener('input',(event)=>{sucheVeranastaltungFunk(event)});
     sucheKuenstlerFunk();
+    sucheVeranastaltungFunk();
 }
 
   function makeRequest(request) {
@@ -162,9 +163,9 @@ function Preise(event){
 function Auftritt(event){
     event.preventDefault();
     const formData = new FormData();
-    formData.append('veranstaltung',document.getElementsByName('Vernasteltung')[0].value);
-    formData.append('Kuenstler',document.getElementsByName('Künstler')[0].value);
-    const request = new Request(url+'Auftrit', {
+    formData.append('Veranstaltung',document.getElementById('AuftritVeranstaltung').value);
+    formData.append('Kuenstler',document.getElementById('AuftritKuenstler').value);
+    const request = new Request(url+'/Auftrit', {
         body: formData,
         method: "POST",
     });
@@ -174,7 +175,7 @@ function Auftritt(event){
             userin.reset();
         console.log('reset');
         }else{
-            console.log('fehler');
+            console.log('existiert bereits');
         }
       })
       .catch(error => {
@@ -206,11 +207,17 @@ function Merken(event){
   }
 
   function sucheKuenstlerFunk(event){
+    const suche = document.getElementById('AuftritKuenstler');
+    suche.innerHTML = '';
     let name = sucheKuenstler.value;
+    const data = {'valid': true, 'search': name};
     console.log(name);
     const request = new Request(url+'/getKuenstler',{
-      body: {name: name},
+      body: JSON.stringify(data),
       method: 'POST',
+      headers: {
+        "Content-Type": "application/json"
+      }
     });
     makeRequest(request)
       .then(res =>{
@@ -221,9 +228,43 @@ function Merken(event){
             const name = row.Name;
             console.log(id, name);
             const paragraph = document.createElement('option');
-          paragraph.innerHTML('<p name=\''+id+'\'>'+name+'</p>');
-            document.getElementById('AuftritKuenstler').appendChild(paragraph);
+            paragraph.value = id;
+            paragraph.label = name;
+          //paragraph.innerHTML('<p name=\''+id+'\'>'+name+'</p>');
+            suche.appendChild(paragraph);
           });
         }
       })
-  }
+    }
+    
+    function sucheVeranastaltungFunk(event){
+    const suche = document.getElementById('AuftritVeranstaltung');
+    suche.innerHTML = '';
+    let name = sucheVeranastaltung.value;
+    const data = {'valid': true, 'search': name};
+    console.log(name);
+    const request = new Request(url+'/getVeranstaltung',{
+      body: JSON.stringify(data),
+       method: 'POST',
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+    makeRequest(request)
+      .then(res =>{
+        console.log(res.rows);
+        if (res.valid) {
+          res.rows.forEach(row => {
+            var id = row.VID;
+            var Name = row.name;
+            var start = row.startDate;
+            const paragraph = document.createElement('option');
+            paragraph.value = id;
+            paragraph.label ='['+ start+ '] '+ Name;
+          //paragraph.innerHTML('<p name=\''+id+'\'>'+name+'</p>');
+            suche.appendChild(paragraph);
+            console.log(Name);
+          });
+        }
+      })
+    }

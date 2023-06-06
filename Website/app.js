@@ -138,6 +138,25 @@ function getID(query){
     });
   });
 
+  app.post("/data/Auftrit", (request, response) => {
+    console.log(request.body);
+    const veranstaltung = request.body.Veranstaltung;
+    const Kuenstler = request.body.Kuenstler;
+    const query = "SELECT MAX(AID) AS count FROM Auftritt";
+    const id = getID(query);
+    console.log(id,veranstaltung,Kuenstler);
+          db.run('INSERT INTO Auftritt (AID,Künstler,Veranstaltung) VALUES (?,?,?)',[id,Kuenstler,veranstaltung], (err) => {
+            if (err) {
+              console.log('unique constraint');
+              response.json(repfalse);
+            } else {
+              console.log('erfolg');
+              response.json(reptrue);
+            }
+          }
+        )}
+  );
+
   app.post('/Festivals/get', (req, res) => {
     // extract data from request body
     const name = req.body.name;
@@ -170,6 +189,16 @@ function getID(query){
         throw err;
       }
         res.status(200).json({ valid: true, rows: rows, id:'main' });
+    });
+  });
+
+  app.post(['/data/getVeranstaltung'],(req, res) => {
+    const name = req.body.search;
+      db.all('SELECT * FROM Veranstaltung where name like ? order by startDate',['%'+name+'%'],(err,rows) => {
+      if (err) {
+        throw err;
+      }
+        res.status(200).json({ valid: true, rows: rows});
     });
   });
 
