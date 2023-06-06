@@ -25,7 +25,8 @@ function init(){
     /*Preisein.addEventListener('submit',(event) => {Preise(event)});*/
     Auftrittin.addEventListener('submit',(event) => {Auftritt(event)});
     sucheKuenstler.addEventListener('input',(event)=>{sucheKuenstlerFunk(event)});
-    sucheVeranastaltung.addEventListener('input',(event)=>{sucheVeranastaltungFunk(event)})
+    sucheVeranastaltung.addEventListener('input',(event)=>{sucheVeranastaltungFunk(event)});
+    sucheKuenstlerFunk();
 }
 
   function makeRequest(request) {
@@ -213,10 +214,11 @@ function Merken(event){
     });
     makeRequest(request)
       .then(res =>{
+        console.log(res.rows);
         if (res.valid) {
           res.rows.forEach(row => {
             const id = row.KID;
-            const name = row.name;
+            const name = row.Name;
             console.log(id, name);
             const paragraph = document.createElement('option');
           paragraph.innerHTML('<p name=\''+id+'\'>'+name+'</p>');

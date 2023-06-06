@@ -191,7 +191,7 @@ db.all("SELECT UserID,Name,Email FROM user WHERE UserID=13", [], (err, rows) => 
 
   app.post(['/',''],(req, res) => {
     const name = req.body.search;
-      db.all('SELECT * FROM Veranstaltung where name like ? and startDate >= ? order by startDate',['%'+name+'%',Date.now()],(err,rows) => {
+      db.all('SELECT * FROM Veranstaltung where name like ? and startDate >= ? order by startDate',['%'+name+'%', Date(Date.now())],(err,rows) => {
       if (err) {
         throw err;
       }
