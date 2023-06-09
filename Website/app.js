@@ -54,7 +54,11 @@ function getID(query){
       return;
     }
     if (row) {
-      const count = row.count;
+      let count = row.count;
+      console.log('Anzahl der Einträge:', count);
+      if(count == null){
+        count = 0;
+      }
       console.log('Anzahl der Einträge:', count);
       return count+1;
     } else {
@@ -143,8 +147,8 @@ function getID(query){
     const veranstaltung = request.body.Veranstaltung;
     const Kuenstler = request.body.Kuenstler;
     const query = "SELECT MAX(AID) AS count FROM Auftritt";
-    const id = getID(query);
-    console.log(id,veranstaltung,Kuenstler);
+    console.log(veranstaltung,Kuenstler);
+    let id = getID(query);
           db.run('INSERT INTO Auftritt (AID,Künstler,Veranstaltung) VALUES (?,?,?)',[id,Kuenstler,veranstaltung], (err) => {
             if (err) {
               console.log('unique constraint');
@@ -220,19 +224,25 @@ function getID(query){
     db.all('SELECT * FROM Veranstaltung where VID = ?',id,(err,rows) => {
       if (err) {
         throw err;
-      }
-        res.status(200).json({ valid: true, rows: rows,id:'veranstaltung' });
+      }res.status(200).json({ valid: true, rows: rows,id:'veranstaltung' });
     });
   });
 
   app.post(['/Kuenstler/:id'], (req, res) => {
     const id = req.params.id;
     console.log(id);
+    let rows;
+    let Arows;
     db.all('SELECT * FROM Künstler where KID = ?',id,(err,rows) => {
       if (err) {
         throw err;
       }
-        res.status(200).json({ valid: true, rows: rows,id:'Kuenstler' });
+      db.all('SELECT v.VID, v.name, v.startDate FROM Veranstaltung v , Auftritt a WHERE v.Vid = a.Veranstaltung and a.Künstler = ? ORDER BY v.startDate;',id,(err,Arows) => {
+      if (err) {
+        throw err;
+      }
+      res.status(200).json({ valid: true, rows: rows, Arows: Arows,id:'Kuenstler' });
+    });
     });
   });
   

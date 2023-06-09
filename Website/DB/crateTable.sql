@@ -32,7 +32,8 @@ CREATE TABLE Künstler(
 CREATE TABLE Auftritt(
     AID integer PRIMARY KEY,
     Künstler REFERENCES Künstler(KID) not null,
-    Veranstaltung REFERENCES Veranstaltung(VID) not null);
+    Veranstaltung REFERENCES Veranstaltung(VID) not null,
+    CONSTRAINT Auftritt_unique UNIQUE(Künstler,Veranstaltung));
 
 CREATE TABLE Merken(
     MID Integer PRIMARY KEY,

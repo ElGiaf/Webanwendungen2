@@ -141,6 +141,7 @@ dd::after {
 }
 
 .Vlogo{
+    border-radius:  3em;
     float:left;
     margin-right: 25px;
     width: 20em;
@@ -153,18 +154,19 @@ dd::after {
     display:block;
 }
 
-.Zeitraum{
+#Zeitraum{
     margin:2em  0 2em 0 ;
     width: 50%;
     border-collapse: collapse;
 }
 
-.Zeitraum th, td{
+#Zeitraum th, td{
     border: solid;
 }
 
 
 .bilderreihe{
+    border-radius: 3em;
     float: right;
     width: 30em;
     margin-left: 10em;
@@ -183,10 +185,10 @@ main {
     text-align: justify;
     /*background-color: rgba(0, 0, 0, 0.432);*/
 }
-
-p{
+p.Ktext{
     height: 1.5em;
     display: grid;
+    width: 60%;
 }
 
 .maintext{

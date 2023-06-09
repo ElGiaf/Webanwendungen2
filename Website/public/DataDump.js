@@ -162,12 +162,14 @@ function Preise(event){
 
 function Auftritt(event){
     event.preventDefault();
-    const formData = new FormData();
-    formData.append('Veranstaltung',document.getElementById('AuftritVeranstaltung').value);
-    formData.append('Kuenstler',document.getElementById('AuftritKuenstler').value);
+    let data = {Veranstaltung: document.getElementById('AuftritVeranstaltung').value, Kuenstler: document.getElementById('AuftritKuenstler').value};
+    console.log(document.getElementById('AuftritVeranstaltung').value,document.getElementById('AuftritKuenstler').value);
     const request = new Request(url+'/Auftrit', {
-        body: formData,
+        body: JSON.stringify(data),
         method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        }
     });
     makeRequest(request)
       .then(res => {
@@ -230,7 +232,6 @@ function Merken(event){
             const paragraph = document.createElement('option');
             paragraph.value = id;
             paragraph.label = name;
-          //paragraph.innerHTML('<p name=\''+id+'\'>'+name+'</p>');
             suche.appendChild(paragraph);
           });
         }

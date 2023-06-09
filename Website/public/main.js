@@ -32,7 +32,7 @@ function getPage(){
             var text = rows[0].InfoText;
             console.log(name,logo,Bilder,start,ende,text);
             var container = document.getElementById('container');
-            container.innerHTML = "<p><img src=\"Bilder/"+logo+"\" alt=\"\" class=\"Vlogo\"><h2>"+name+"</h2>"+start+", "+ende+" <br> <a href=\"javascript:history.back()\">zurück</a></p><img src=\"Bilder/"+Bilder+"\" alt=\"\" class=\"bilderreihe\"><button id=\"erinnerung\">Erinnerung erstellen</button><p class=\"vtext\">"+text+"</p>";
+            container.innerHTML = "<p><img src=\"Bilder/"+logo+"\" alt=\"\" class=\"Vlogo\"></p><p><h2>"+name+"</h2>"+start+", "+ende+" <br> <a href=\"javascript:history.back()\">zurück</a></p><img src=\"Bilder/"+Bilder+"\" alt=\"\" class=\"bilderreihe\"><button id=\"erinnerung\">Erinnerung erstellen</button><p class=\"vtext\">"+text+"</p>";
           }
           if(res.id == 'main'){
             var container = document.getElementById('container');
@@ -84,8 +84,18 @@ function getPage(){
               var bilderreihe = row.bilderreihe;
               var langText = row.langText;
               var paragraph = document.createElement('div');
-              paragraph.innerHTML = "<img src=\"Bilder/"+bild+"\" alt=\"\" class=\"Vlogo\"><h2>"+name+"</h2><a href=\"javascript:history.back()\">zurück</a><img src=\"Bilder/"+bilderreihe+"\" alt=\"\" class=\"bilderreihe\"><p>"+langText+"</p>";
+              paragraph.innerHTML = "<img src=\"Bilder/"+bild+"\" alt=\"\" class=\"Vlogo\"><h2>"+name+"</h2><a href=\"javascript:history.back()\">zurück</a><button id=\"erinnerung\">Erinnerung erstellen</button><img src=\"Bilder/"+bilderreihe+"\" alt=\"\" class=\"bilderreihe\"><table id=\"Zeitraum\"><tr><th>Auftrit</th><th>Datum</th></tr></table><p class='Ktext'>"+langText+"</p>";
               container.appendChild(paragraph);
+            });
+            var Auftritte = document.getElementById('Zeitraum');
+            res.Arows.forEach((row) => {
+              const id = row.VID;
+              const name = row.name;
+              const start = row.startDate;
+              console.log(id,name,start);
+              var paragraph = document.createElement('tr');
+              paragraph.innerHTML = "<td><a href=\"/"+id+"\">"+name+"</a></td><td>"+start+"</td>";
+              Auftritte.appendChild(paragraph);
             });
           }
         });

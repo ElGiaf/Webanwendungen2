@@ -6,6 +6,7 @@ SELECT * from user;
 SELECT * from test;
 SELECT * FROM Künstler;
 SELECT * FROM Veranstaltung;
+SELECT * FROM Auftritt;
 
 
 CREATE TABLE test(
@@ -17,3 +18,8 @@ DELETE from user WHERE UserID > 12;
 DELETE FROM Veranstaltung WHERE VID = 8;
 UPDATE Veranstaltung set endDate = NULL where VID = 5
 SELECT * FROM Künstler where Name like '%%';
+
+drop TABLE Auftritt;
+DELETE FROM Auftritt WHERE AID = 2;
+ALTER TABLE Auftritt ADD CONSTRAINT Auftritt_unique UNIQUE(Künstler, Veranstaltung);
+SELECT v.VID, v.name, v.startDate FROM Veranstaltung v , Auftritt a WHERE v.Vid = a.Veranstaltung and a.Künstler = '1' ORDER BY v.startDate;
