@@ -32,7 +32,20 @@ function getPage(){
             var text = rows[0].InfoText;
             console.log(name,logo,Bilder,start,ende,text);
             var container = document.getElementById('container');
-            container.innerHTML = "<p><img src=\"Bilder/"+logo+"\" alt=\"\" class=\"Vlogo\"></p><p><h2>"+name+"</h2>"+start+", "+ende+" <br> <a href=\"javascript:history.back()\">zurück</a></p><img src=\"Bilder/"+Bilder+"\" alt=\"\" class=\"bilderreihe\"><button id=\"erinnerung\">Erinnerung erstellen</button><p class=\"vtext\">"+text+"</p>";
+            container.innerHTML = "<p><img src=\"Bilder/"+logo+"\" alt=\"\" class=\"Vlogo\"></p><p><h2>"+name+"</h2>"+start+", "+ende+" <br> <a href=\"javascript:history.back()\">zurück</a></p><img src=\"Bilder/"+Bilder+"\" alt=\"\" class=\"bilderreihe\"><button id=\"erinnerung\">Erinnerung erstellen</button><p class=\"vtext\">"+text+"</p><table id=\"preise\"><tr><th>Klasse/Phase</th><th>Preis</th><th>Anzahl</th><th>Verkaufsstart</th></tr></table><h3>Künstler</h3><p id=\"künstler\"></p>";
+            var kuenstler = document.getElementById('künstler');
+            res.Krows.forEach((row) => {
+              var paragraph= document.createElement('a');
+              paragraph.href = 'Kuenstler/'+row.KID;
+              paragraph.innerHTML = row.Name + ", ";
+              kuenstler.appendChild(paragraph);
+            });
+            var preise = document.getElementById('preise');
+            res.Prows.forEach((row) =>{
+              var paragraph = document.createElement('tr');
+              paragraph.innerHTML = '<td>'+row.klasse+'</td><td>'+row.Preis+' €</td><td>'+row.anzahl+'</td><td>'+row.VStart+'</td>';
+              preise.appendChild(paragraph);
+            })
           }
           if(res.id == 'main'){
             var container = document.getElementById('container');

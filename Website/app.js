@@ -142,6 +142,28 @@ function getID(query){
     });
   });
 
+  app.post("/data/Preise", (request, response) => {
+    console.log('preise eingegangen:',request.body);
+    const veranstaltung = request.body.veranstaltung;
+    const klasse = request.body.klasse;
+    const preis = request.body.preis;
+    const anzahl = request.body.anzahl;
+    const vstart = request.body.vstart;
+    const query = "SELECT MAX(Pid) AS count FROM Preise";
+    console.log(veranstaltung,klasse,preis,anzahl,vstart);
+    let id = getID(query);
+          db.run('INSERT INTO Preise (Pid,Vid,klasse,Preis,anzahl,VStart) VALUES (?,?,?,?,?,?)',[id,veranstaltung,klasse,preis,anzahl,vstart], (err) => {
+            if (err) {
+              console.log('unique constraint');
+              response.json(repfalse);
+            } else {
+              console.log('erfolg');
+              response.json(reptrue);
+            }
+          }
+        )}
+  );
+
   app.post("/data/Auftrit", (request, response) => {
     console.log(request.body);
     const veranstaltung = request.body.Veranstaltung;
@@ -224,7 +246,16 @@ function getID(query){
     db.all('SELECT * FROM Veranstaltung where VID = ?',id,(err,rows) => {
       if (err) {
         throw err;
-      }res.status(200).json({ valid: true, rows: rows,id:'veranstaltung' });
+      }db.all('SELECT k.KID,k.Name FROM Künstler k,Auftritt a where a.Veranstaltung = ? and a.Künstler = k.KID',id,(err,Krows) => {
+        if (err) {
+          throw err;
+        }db.all('SELECT * FROM Preise where Vid = ? order by VStart',id,(err,Prows) => {
+          if (err) {
+            throw err;
+          }console.log(Krows,Prows);
+          res.status(200).json({ valid: true, rows: rows,Krows: Krows,Prows: Prows,id:'veranstaltung' });
+        });
+      });
     });
   });
 

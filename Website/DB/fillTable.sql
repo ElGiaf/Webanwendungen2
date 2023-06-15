@@ -23,3 +23,5 @@ drop TABLE Auftritt;
 DELETE FROM Auftritt WHERE AID = 2;
 ALTER TABLE Auftritt ADD CONSTRAINT Auftritt_unique UNIQUE(Künstler, Veranstaltung);
 SELECT v.VID, v.name, v.startDate FROM Veranstaltung v , Auftritt a WHERE v.Vid = a.Veranstaltung and a.Künstler = '1' ORDER BY v.startDate;
+SELECT * from Preise WHERE Vid='1';
+SELECT * FROM Preise WHERE Vid='2';

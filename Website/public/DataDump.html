@@ -105,16 +105,16 @@
 		</form>
 		<form id="Preise">
 			<h1>Preise</h1>	
-			<input type="number" name="Vernasteltung" placeholder="Vernasteltung" required> 
-			<input type="text" name="klasse" placeholder="Name" required>
-			<input type="number" name="preis" placeholder="Preis" required>
+			<input type="search" name="Veranstaltung" id="suchePreisV">
+			<select name="Veranstaltung" id="PreisVeranstaltung"></select>
+			<input type="text" name="klasse" placeholder="Stufe/Welle" required>
+			<input type="number" min="0.00" max="10000.00" step="0.01" name="preis" placeholder="Preis" required>
 			<input type="number" name="anzahl" placeholder="Anzahl" required>
 			<input type="date" name="vstart" placeholder="vstart" required>
 			<Button type="submit">Absenden</Button>
 		</form>
 		
-		<form name="Auftritt" id="Auftritt">
-			<!-- https://www.php-einfach.de/2020/11/interaktives-dropdown-inklusive-serverseitige-suche/ -->
+		<form id="Auftritt">
 			<h1>Auftritt</h1>	
 			<label for="Kuenstler">Künstler</label>
 			<input type="search" name="Kuenstler" id="sucheAuftritK">

@@ -15,19 +15,22 @@ function init(){
     userin = document.getElementById('user');
     veranstaltungin = document.getElementById('Veranstaltung');
     Künstlerin = document.getElementById('Künstler');
-    /*Preisein = document.getElementById('Preise');*/
+    Preisein = document.getElementById('Preise');
     Auftrittin = document.getElementById('Auftritt');
     sucheKuenstler = document.getElementById('sucheAuftritK');
     sucheVeranastaltung= document.getElementById('sucheAuftritV');
+    preisVeranastaltung= document.getElementById('suchePreisV');
     userin.addEventListener('submit',(event) => {user(event)});
     veranstaltungin.addEventListener('submit', (event) => {Veranstaltung(event)});
     Künstlerin.addEventListener('submit',(event) => {Künstler(event)});
-    /*Preisein.addEventListener('submit',(event) => {Preise(event)});*/
+    Preisein.addEventListener('submit',(event) => {Preise(event)});
     Auftrittin.addEventListener('submit',(event) => {Auftritt(event)});
     sucheKuenstler.addEventListener('input',(event)=>{sucheKuenstlerFunk(event)});
     sucheVeranastaltung.addEventListener('input',(event)=>{sucheVeranastaltungFunk(event)});
+    preisVeranastaltung.addEventListener('input',(event)=>{preisVeranastaltungFunk(event)});
     sucheKuenstlerFunk();
     sucheVeranastaltungFunk();
+    preisVeranastaltungFunk();
 }
 
   function makeRequest(request) {
@@ -136,20 +139,18 @@ function Künstler(event){
 
 function Preise(event){
     event.preventDefault();
-    const formData = new FormData();
-    formData.append('veranstaltung',document.getElementsByName('Vernasteltung')[0].value);
-    formData.append('klasse',document.getElementsByName('klasse')[0].value);
-    formData.append('preis',document.getElementsByName('preis')[0].value);
-    formData.append('anzahl',document.getElementsByName('anzahl')[0].value);
-    formData.append('vstart',document.getElementsByName('vstart')[0].value);
-    const request = new Request(url+'Preise', {
-        body: formData,
+    let data = {veranstaltung: document.getElementById('PreisVeranstaltung').value,klasse: document.getElementsByName('klasse')[0].value,preis: document.getElementsByName('preis')[0].value,anzahl: document.getElementsByName('anzahl')[0].value,vstart: document.getElementsByName('vstart')[0].value};
+    const request = new Request(url+'/Preise', {
+        body: JSON.stringify(data),
         method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        }
     });
     makeRequest(request)
       .then(res => {
         if(res){
-            userin.reset();
+            Preisein.reset();
         console.log('reset');
         }else{
             console.log('fehler');
@@ -174,7 +175,7 @@ function Auftritt(event){
     makeRequest(request)
       .then(res => {
         if(res){
-            userin.reset();
+          Auftrittin.reset();
         console.log('reset');
         }else{
             console.log('existiert bereits');
@@ -185,7 +186,7 @@ function Auftritt(event){
       });
   }
 
-function Merken(event){
+/*function Merken(event){
     event.preventDefault();
     const formData = new FormData();
     formData.append('veranstaltung',document.getElementsByName('Vernasteltung')[0].value);
@@ -207,7 +208,7 @@ function Merken(event){
         console.log(error);
       });
   }
-
+*/
   function sucheKuenstlerFunk(event){
     const suche = document.getElementById('AuftritKuenstler');
     suche.innerHTML = '';
@@ -269,3 +270,34 @@ function Merken(event){
         }
       })
     }
+
+    function preisVeranastaltungFunk(event){
+      const suche = document.getElementById('PreisVeranstaltung');
+      suche.innerHTML = '';
+      let name = preisVeranastaltung.value;
+      const data = {'valid': true, 'search': name};
+      console.log(name);
+      const request = new Request(url+'/getVeranstaltung',{
+        body: JSON.stringify(data),
+         method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+      makeRequest(request)
+        .then(res =>{
+          console.log(res.rows);
+          if (res.valid) {
+            res.rows.forEach(row => {
+              var id = row.VID;
+              var Name = row.name;
+              var start = row.startDate;
+              const paragraph = document.createElement('option');
+              paragraph.value = id;
+              paragraph.label ='['+ start+ '] '+ Name;
+              suche.appendChild(paragraph);
+              console.log(Name);
+            });
+          }
+        })
+      }
