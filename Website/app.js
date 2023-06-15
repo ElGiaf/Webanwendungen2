@@ -30,7 +30,7 @@ app.use(bodyParser.json());
 app.set('view engine', 'ejs');
 
 // Definiere Route für Seiten
-app.get(['/','/Kuenstler','/Konto','/Einstellungen'], (req, res) => {
+app.get(['/','/Kuenstler','/Einstellungen'], (req, res) => {
   // Sende die HTML-Datei als Antwort auf die Anfrage
   res.sendFile(path.join(__dirname, 'public', 'Main.html'));
 });
@@ -44,6 +44,12 @@ app.get('/data', (req, res) => {
 });
 app.get(['/Konzerte/:id','/Festivals/:id','/:id','/Kuenstler/:id'], (req, res) => {
   res.sendFile(path.join(__dirname, 'public', '/Main.html'));
+});
+
+
+//getlogin 
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, 'Login.html'));
 });
 
 
@@ -276,6 +282,19 @@ function getID(query){
     });
     });
   });
+
+  //post login
+  app.post('/login',(req, res) => {
+    const name = req.body.search;
+      db.all('SELECT * FROM user',(err,rows) => {
+      if (err) {
+        throw err;
+      }
+        res.status(200).json({ valid: true, rows: rows});
+        console.log("Verbindung steht")
+    });
+  });
+
   
   // Server starten
   app.listen(port, () => {
