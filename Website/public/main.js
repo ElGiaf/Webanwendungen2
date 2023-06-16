@@ -1,6 +1,7 @@
 window.addEventListener('DOMContentLoaded', init);
 let url;
 
+
 function init(){
     url = window.location.href;
     const suche=document.getElementById('suche');
@@ -46,7 +47,7 @@ function getPage(){
               paragraph.innerHTML = '<td>'+row.klasse+'</td><td>'+row.Preis+' €</td><td>'+row.anzahl+'</td><td>'+row.VStart+'</td>';
               preise.appendChild(paragraph);
             })
-          }
+          } 
           if(res.id == 'main'){
             var container = document.getElementById('container');
             container.innerHTML='';
