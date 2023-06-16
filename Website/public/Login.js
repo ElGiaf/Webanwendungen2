@@ -1,9 +1,14 @@
+<<<<<<< HEAD
 
 window.addEventListener('DOMContentLoaded', init)
+=======
+window.addEventListener('DOMContentLoaded', init);
+>>>>>>> 7c52590a056b93ae01a8e1a675a97ffe299ccdd9
 let url;
 
 function init(){
     url = window.location.href;
+<<<<<<< HEAD
     const cookie = require('cookie');
     const express = require('express');
     const http = require('http');
@@ -85,3 +90,12 @@ app.get('/', (req, res) => {
 
 
     
+=======
+    anmeldenoption();
+};
+
+function anmeldenoption(){
+    var container = document.getElementById('container');
+    container.innerHTML = '<section class="input"><button>Anmelden</button><button>Registrieren</button></section>';
+}
+>>>>>>> 7c52590a056b93ae01a8e1a675a97ffe299ccdd9
