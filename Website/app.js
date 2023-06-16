@@ -29,6 +29,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.set('view engine', 'ejs');
 
+app.get('/favicon.ico', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'favicon.ico'));
+});
 // Definiere Route für Seiten
 app.get(['/','/Kuenstler','/Einstellungen'], (req, res) => {
   // Sende die HTML-Datei als Antwort auf die Anfrage
@@ -42,15 +45,17 @@ app.get('/data', (req, res) => {
   // Sende die HTML-Datei als Antwort auf die Anfrage
   res.sendFile(path.join(__dirname, 'public', 'DataDump.html'));
 });
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', '/Login.html'));
+});
 app.get(['/Konzerte/:id','/Festivals/:id','/:id','/Kuenstler/:id'], (req, res) => {
   res.sendFile(path.join(__dirname, 'public', '/Main.html'));
 });
 
-
 //getlogin Verbinde die suc he /login mit loginhtml 
-app.get('/login', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public','Login.html'));
-});
+/*app.get(['/login'], (req, res) => {
+  res.sendFile(path.join(__dirname, 'public','/Login.html'));
+});*/
 
 
 function getID(query){
