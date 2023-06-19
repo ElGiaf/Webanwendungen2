@@ -7,11 +7,13 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const { get } = require('https');
 
-
+//Definierne der Datenbank
 let db = new sqlite3.Database('./DB/data.db');
 const app = express();
+//Definieren des Ports
 const port = 8080;
 
+//Initalisierung von multer
 const storage = multer.diskStorage({
     destination: "./public/Bilder/",
     filename: function (request, file, callback) {
@@ -21,6 +23,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+//JSON responses
 let reptrue = {valid:true};
 let repfalse  = {valid:false}
 
@@ -29,35 +32,35 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.set('view engine', 'ejs');
 
+//Get funktionen für die einzelnen Seiten
 app.get('/favicon.ico', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'favicon.ico'));
 });
-// Definiere Route für Seiten
+// Hauptseite, Künstler und Einstellungen
 app.get(['/','/Kuenstler','/Einstellungen'], (req, res) => {
   // Sende die HTML-Datei als Antwort auf die Anfrage
   res.sendFile(path.join(__dirname, 'public', 'Main.html'));
 });
+// Veranstaltungsseite mit Datumseingrenzung
 app.get(['/Festivals','/Konzerte'], (req, res) => {
   // Sende die HTML-Datei als Antwort auf die Anfrage
   res.sendFile(path.join(__dirname, 'public', 'Veranstaltung.html'));
 });
+//Seite um Inhalte hochzuladen
 app.get('/data', (req, res) => {
   // Sende die HTML-Datei als Antwort auf die Anfrage
   res.sendFile(path.join(__dirname, 'public', 'DataDump.html'));
 });
+//Loginseite
 app.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', '/Login.html'));
 });
+//Anzeigen einzlener Künstler oder Veranstaltungen
 app.get(['/Konzerte/:id','/Festivals/:id','/:id','/Kuenstler/:id'], (req, res) => {
   res.sendFile(path.join(__dirname, 'public', '/Main.html'));
 });
 
-//getlogin Verbinde die suc he /login mit loginhtml 
-/*app.get(['/login'], (req, res) => {
-  res.sendFile(path.join(__dirname, 'public','/Login.html'));
-});*/
-
-
+//Abfrage der höchsten id in einer Tabelle zur bestimmung der ID
 function getID(query){
   db.get(query, (err, row) => {
     if (err) {
@@ -79,6 +82,7 @@ function getID(query){
   });
 }
 
+//Einfügen neuer Nutzer in die tabelle user
   app.post("/data/user", (request, response) => {
     console.log(request.body);
     const name = request.body.userName;
@@ -98,7 +102,7 @@ function getID(query){
         )}
   );
 
-
+//Einfügen neuer Veranstaltungen in die tabelle Veranstaltungen
   app.post("/data/veranstaltung", upload.fields([
     { name: "logo", maxCount: 1 },
     { name: "Bilder"}
@@ -127,7 +131,8 @@ function getID(query){
       }
     });
   });
-  
+
+//Einfügen neuer Künstler in die tabelle Künstler
   app.post("/data/Kuenstler", upload.fields([
     { name: "bild", maxCount: 1 },
     { name: "bilder"}
@@ -153,6 +158,7 @@ function getID(query){
     });
   });
 
+//Einfügen neuer Preise in die tabelle Preise
   app.post("/data/Preise", (request, response) => {
     console.log('preise eingegangen:',request.body);
     const veranstaltung = request.body.veranstaltung;
@@ -175,6 +181,7 @@ function getID(query){
         )}
   );
 
+//Einfügen der verbindung von Veranstaltung und Künstler
   app.post("/data/Auftrit", (request, response) => {
     console.log(request.body);
     const veranstaltung = request.body.Veranstaltung;
@@ -194,6 +201,7 @@ function getID(query){
         )}
   );
 
+  //Ausgabe der veranstaltungen(mit enddatum) in einem bestimmten Zeitraum
   app.post('/Festivals/get', (req, res) => {
     // extract data from request body
     const name = req.body.name;
@@ -206,7 +214,7 @@ function getID(query){
         res.status(200).json({ valid: true, rows: rows });
     });
   });
-
+//Ausgabe der veranstaltungen(ohne enddatum) in einem bestimmten Zeitraum
   app.post('/Konzerte/get', (req, res) => {
     const name = req.body.name;
     const von = req.body.von;
@@ -218,7 +226,7 @@ function getID(query){
         res.status(200).json({ valid: true, rows: rows });
     });
   });
-
+//Ausgabe aller zukünftigen veranstaltungen auf die Hauptseite
   app.post(['/',''],(req, res) => {
     const name = req.body.search;
       db.all('SELECT * FROM Veranstaltung where name like ? and startDate >= ? order by startDate',['%'+name+'%', Date.now()],(err,rows) => {
@@ -228,7 +236,7 @@ function getID(query){
         res.status(200).json({ valid: true, rows: rows, id:'main' });
     });
   });
-
+//Ausgabe aller Veranstaltungen für die dateneingabe
   app.post(['/data/getVeranstaltung'],(req, res) => {
     const name = req.body.search;
       db.all('SELECT * FROM Veranstaltung where name like ? order by startDate',['%'+name+'%'],(err,rows) => {
@@ -238,7 +246,7 @@ function getID(query){
         res.status(200).json({ valid: true, rows: rows});
     });
   });
-
+//Ausgabe aller Künstler (mit suchfunktion) 
   app.post(['/Kuenstler','/Kuenstler/','/data/getKuenstler'], (req, res) => {
     const name = req.body.search;
     console.log('name: ',name);
@@ -250,7 +258,7 @@ function getID(query){
         res.status(200).json({ valid: true, rows: rows, id: 'Kuenstlerall' });
     });
   });
-
+//Ausgabe einzelner veranstaltungen 
   app.post(['/Konzerte/:id','/Festivals/:id','/:id'], (req, res) => {
     const id = req.params.id;
     console.log(id);
@@ -269,7 +277,7 @@ function getID(query){
       });
     });
   });
-
+//Ausgabe einzelner Künstler
   app.post(['/Kuenstler/:id'], (req, res) => {
     const id = req.params.id;
     console.log(id);

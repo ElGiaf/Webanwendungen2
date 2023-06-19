@@ -24,7 +24,6 @@ function getPage(){
         .then(res => {
           if(res.id == 'veranstaltung'){
             const rows= res.rows;
-            //const id = rows[0].VID;
             var name = rows[0].name;
             var logo = rows[0].Logo;
             var Bilder = rows[0].Bilder;
@@ -51,8 +50,6 @@ function getPage(){
           if(res.id == 'main'){
             var container = document.getElementById('container');
             container.innerHTML='';
-            //var js = document.getElementsByTagName('Head');
-            //js.appendChild(document.createElement('<script src="logo.js"></script>'))
             res.rows.forEach((row) => {
               const id = row.VID;
               const name = row.name;
